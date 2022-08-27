@@ -3,6 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import { usePackages } from '../hooks/usePackages';
 import { transformDefaultDep } from '../utils';
 import DepRow from './DepRow';
+import DepTable from './DepTable';
 
 const PackageSelectSection = () => {
   const {
@@ -36,40 +37,22 @@ const PackageSelectSection = () => {
   );
 
   return (
-    <div className="">
-      <DepTable name={"Dependencies"}>
-        <tbody className="border-2 border-black">{depRows}</tbody>
-      </DepTable>
-      <DepTable name={"DevDependencies"}>
-        <tbody className="border-2 border-black">{devDepRows}</tbody>
-      </DepTable>
+    <div className="mb-20">
+      <div className="mb-12">
+        <p className="mx-auto mb-5 w-fit border-b-2 border-slate-400 py-1 px-20 text-xl font-bold">
+          Dependencies:
+        </p>
+        <DepTable>{depRows}</DepTable>
+      </div>
+      <div className="mb-12">
+        <p className="mx-auto mb-5 w-fit border-b-2 border-slate-400 py-1 px-20 text-xl font-bold">
+          Dev Dependencies:
+        </p>
+        <DepTable>{devDepRows}</DepTable>
+      </div>
     </div>
   );
 };
 
-const DepTable = ({ children, name}: { children: React.ReactNode, name: string })=>(
-  <div className="mb-8">
-    <p className="mb-2">{name}:</p>
-    <table className="mx-auto">
-      <TableHead />
-      {children}
-    </table>
-  </div>
-);
-
-const TableHead = () => (
-  <thead>
-    <tr className="[&>td:not(:first-child)]:text-center">
-      <td>Package Name</td>
-      <td>Ver.</td>
-      <td>Add</td>
-      <td>Remove</td>
-      <td>Upgrade</td>
-      <td>Default</td>
-      <td>Current</td>
-      <td>Latest</td>
-    </tr>
-  </thead>
-);
 
 export default PackageSelectSection;

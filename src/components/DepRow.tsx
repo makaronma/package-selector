@@ -11,8 +11,9 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
   return (
     <tr
       className="border-black 
-                  [&>td:not(:first-child)]:text-center [&>td]:min-w-[100px] [&>td]:border-[1px] [&>td]:border-black [&>td]:py-1
-                  [&>td]:px-3
+                  [&>td:not(:first-child)]:text-center [&>td]:min-w-[100px] 
+                  [&>td]:py-3
+                  [&>td]:px-4
                   "
       key={`d-${dep.name}-${index}`}
     >

@@ -4,15 +4,25 @@ import PackageSelectSection from './components/PackageSelectSection';
 
 // TODO: add 'ignore action type'
 // TODO: add a button to set same choice for all row
+// TODO: add switch terminal
 
 const App = () => {
   return (
-    <div className="min-h-screen w-screen bg-sky-100 p-6">
-      <h1 className="text-3xl font-bold">Package Selector</h1>
-      <InputArea />
-      <PackageSelectSection />
-      <CommandDisplay />
-    </div>
+    <>
+      <div className="min-h-screen bg-sky-100">
+        <div className="bg-white p-4 text-2xl flex font-bold flex-row shadow-lg mb-4 justify-between">
+          <h1>Package Selector</h1>
+          <a href="https://github.com/makaronma/package-selector" target='_blank' rel="noreferrer">
+            <img src="GitHub-Mark-64px.png" className='h-10' alt="github-source" />
+          </a>
+        </div>
+        <div className=" px-14 pt-6 pb-24">
+          <InputArea />
+          <PackageSelectSection />
+          <CommandDisplay />
+        </div>
+      </div>
+    </>
   );
 };
 

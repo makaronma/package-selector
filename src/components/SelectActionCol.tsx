@@ -38,7 +38,7 @@ const RadioCol = ({ depName, value, choice, setChoice, isDev }: SelectActionColT
   }, [depName, isDev, setChoice, setDependencies, setDevDependencies, value]);
 
   return (
-    <td className="">
+    <td className="hover:bg-slate-50" onClick={onChange}>
       <input
         type="radio"
         name={`radio-select-action-${depName}`}

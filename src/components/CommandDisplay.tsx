@@ -46,10 +46,10 @@ const CommandDisplay = () => {
   
   const onCopy = () => setIsCopied(true);
   return (
-    <div className="relative mx-auto w-4/5 overflow-hidden rounded-lg">
+    <div className="relative mx-auto w-4/5 overflow-hidden rounded-lg shadow-lg">
       <div className="flex items-center justify-between bg-slate-600 px-2">
         <div className="">
-          <div className="p-2 text-sky-300">Terminal</div>
+          <div className="p-2 text-sky-300">VS Code's Terminal</div>
         </div>
         <CopyToClipboard text={command} onCopy={onCopy}>
           <div className="cursor-pointer p-2">

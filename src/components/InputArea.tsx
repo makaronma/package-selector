@@ -1,4 +1,5 @@
-import { ArrowLongDownIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, XCircleIcon, ArrowDownIcon } from '@heroicons/react/24/solid';
+
 import { useCallback, useEffect, useRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -41,13 +42,20 @@ const InputArea = () => {
   }, [setDataInput, setisInputValid]);
 
   return (
-    <div className="mb-4 flex w-full flex-col items-center [&>*]:mb-4">
-      <div className="">Paste your package.json here</div>
-      <ArrowLongDownIcon className="h-6" />
-      <div className="w-4/5 self-start mx-auto">{isInputValid?'valid':'invalid'}</div>
+    <div className="mb-12 flex w-full flex-col items-center">
+      <div className="font-semibold mb-1">Paste your package.json here</div>
+      <div className="shadow-lg rounded-full p-1 bg-white animate-arrow-bounce mb-1">
+        <ArrowDownIcon className="h-5 text-sky-500" />
+      </div>
+      <div className="mx-auto w-4/5 self-start flex mb-1">
+        {isInputValid ? 
+          <><span className='mr-1'>Valid Format</span><CheckCircleIcon className='w-4 text-green-600'/></> : 
+          <><span className='mr-1'>Invalid Format</span><XCircleIcon className='w-4 text-red-600'/></> 
+        }
+      </div>
       <TextareaAutosize
         ref={textAreaRef}
-        style={{height: 250}}
+        style={{ height: 250 }}
         className="w-4/5 resize p-2 text-xs"
         maxRows={5}
         onChange={onChange}

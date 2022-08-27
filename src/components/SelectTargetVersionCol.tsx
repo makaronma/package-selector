@@ -38,12 +38,12 @@ const SelectTargetVerCol = ({ depName, value, choice, setChoice, isDev }: Select
   }, [depName, isDev, setChoice, setDependencies, setDevDependencies, value]);
 
   return (
-    <td className="">
+    <td className="hover:bg-slate-50" onClick={onChange}>
       <input
         type="radio"
         name={`radio-select-target-ver-${depName}`}
         value={value}
-        onChange={onChange}
+        // onChange={onChange}
         checked={choice === value}
         className="radio checked:bg-blue-500 m-auto flex"
       />
