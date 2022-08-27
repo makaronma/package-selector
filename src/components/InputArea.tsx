@@ -4,25 +4,52 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { usePackages } from '../hooks/usePackages';
 import { PackageInputType } from '../types';
 
+const processDataFromInput = (
+  input: string,
+  cb: (data: PackageInputType) => void,
+  fb: () => void
+) => {
+  try {
+    const data = JSON.parse(input) as PackageInputType;
+    cb(data);
+  } catch (error) {
+    fb();
+  }
+};
 
 const InputArea = () => {
   const {isInputValid, setisInputValid,setDataInput } = usePackages();
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
-  const onChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (!setisInputValid || !setDataInput) return;
-    try {
-      const data = JSON.parse(e.target.value) as PackageInputType;
-      setisInputValid(true);
-      setDataInput(data);
-    } catch (error) {
-      setisInputValid(false);
-    }
-  }, [setDataInput, setisInputValid]);
+  const onChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (!setisInputValid || !setDataInput) return;
+      processDataFromInput(
+        e.target.value,
+        (data) => {
+          setisInputValid(true);
+          setDataInput(data);
+        },
+        () => setisInputValid(false)
+      );
+    },
+    [setDataInput, setisInputValid]
+  );
 
   useEffect(() => {
-    if (textAreaRef.current) textAreaRef.current.style.height = "250px";
-  }, []);
+    if (!textAreaRef.current) return;
+    if (!setisInputValid || !setDataInput) return;
+
+    textAreaRef.current.style.height = "250px";
+    processDataFromInput(
+      textAreaRef.current.value,
+      (data) => {
+        setisInputValid(true);
+        setDataInput(data);
+      },
+      () => setisInputValid(false)
+    );
+  }, [setDataInput, setisInputValid]);
 
   return (
     <div className="mb-4 flex w-full flex-col items-center [&>*]:mb-4">
@@ -31,7 +58,9 @@ const InputArea = () => {
       <div className="w-4/5 self-start mx-auto">{isInputValid?'valid':'invalid'}</div>
       <TextareaAutosize
         ref={textAreaRef}
+        style={{height: 250}}
         className="w-4/5 resize p-2 text-xs"
+        maxRows={5}
         onChange={onChange}
         defaultValue={exampleJson}
       />
