@@ -1,7 +1,7 @@
-import { usePackages } from "../hooks/usePackages";
-import { useReactTable } from '@tanstack/react-table'
-import { useEffect, useMemo } from "react";
-import { transformDefaultDep } from "../utils";
+import { useEffect } from 'react';
+
+import { usePackages } from '../hooks/usePackages';
+import { transformDefaultDep } from '../utils';
 
 const PackageSelectSection = () => {
   const {
@@ -47,9 +47,9 @@ const PackageSelectSection = () => {
               >
                 <td>{d.name}</td>
                 <td>{d.version}</td>
-                <td>{d.action.type === "add" ? "y" : ""}</td>
-                <td>{d.action.type === "remove" ? "y" : ""}</td>
-                <td>{d.action.type === "upgrade" ? "y" : ""}</td>
+                <td>{d.action === "add" ? "y" : ""}</td>
+                <td>{d.action === "remove" ? "y" : ""}</td>
+                <td>{d.action === "upgrade" ? "y" : ""}</td>
               </tr>
             ))}
           </tbody>

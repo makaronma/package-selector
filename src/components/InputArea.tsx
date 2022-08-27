@@ -1,6 +1,7 @@
 import { ArrowLongDownIcon } from '@heroicons/react/24/outline';
 import { useCallback, useEffect, useRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
+
 import exampleJson from '../exampleJson';
 import { usePackages } from '../hooks/usePackages';
 import { processDataFromInput } from '../utils';

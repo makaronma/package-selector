@@ -3,10 +3,7 @@ export interface PackageInputType {
   devDependencies?: Record<string, string>;
 }
 
-export type DependencyAction = {
-  type: "add" | "remove" | "upgrade";
-  targetVersion: number;
-};
+export type DependencyAction = "add" | "remove" | "upgrade";
 
 export interface Dependency {
   name: string;
