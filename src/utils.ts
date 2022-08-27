@@ -16,9 +16,11 @@ export const processDataFromInput = (
 export const transformDefaultDep = (de: Record<string, string>): Dependency[] =>
   Object.entries(de).map((d) => ({
     name: d[0],
-    version: d[1],
+    version: escapeSpecial(d[1]),
     action: {
       type: "add",
-      targetVersion: Number(d[1].replace(/[^a-zA-Z0-9 ]/g, "")),
+      targetVersion: Number(escapeSpecial(d[1])),
     },
   }));
+
+export const escapeSpecial = (str: string) => str.replace(/[^ 0-9a-zA-Z](?!(?<=\d\.)\d)/g, "");
