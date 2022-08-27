@@ -14,8 +14,12 @@ module.exports = {
     },
   },
   plugins: [
+    require('daisyui'),
     plugin(function({ addVariant }) {
       addVariant('not-last', '&:not(:last-child)')
     })
-  ]
+  ],
+  daisyui: {
+    themes: false,
+  },
 }

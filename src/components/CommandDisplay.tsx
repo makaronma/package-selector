@@ -30,10 +30,10 @@ const CommandDisplay = () => {
     devDependencies.forEach((d) => devDepGroup[d.action].push(`${d.name}@${d.version}`) );
     
     return `
-        ${depToAdd.length>0?`yarn add ${depToAdd.join(" ")}`:''} 
-        ${depToRemove.length>0?`yarn remove ${depToRemove.join(" ")}`:''} 
-        ${depToUpgrade.length>0?`yarn upgrade ${depToUpgrade.join(" ")}`:''} 
-        ${devDepToAdd.length>0?`yarn add -D ${devDepToAdd.join(" ")}`:''} 
+        ${depToAdd.length>0?`yarn add ${depToAdd.join(" ")};`:''} 
+        ${depToRemove.length>0?`yarn remove ${depToRemove.join(" ")};`:''} 
+        ${depToUpgrade.length>0?`yarn upgrade ${depToUpgrade.join(" ")};`:''} 
+        ${devDepToAdd.length>0?`yarn add -D ${devDepToAdd.join(" ")};`:''} 
       `
     ;
   }, [dependencies, devDependencies]);
