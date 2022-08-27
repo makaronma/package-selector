@@ -1,6 +1,7 @@
 {
   "name": "package-selector",
   "version": "0.1.0",
+  "homepage": "https://makaronma.github.io/package-selector",
   "private": true,
   "dependencies": {
     "@heroicons/react": "^2.0.8",
@@ -24,7 +25,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+     "predeploy": "npm run build",
+     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +50,7 @@
   "devDependencies": {
     "@types/react-copy-to-clipboard": "^5.0.4",
     "autoprefixer": "^10.4.8",
+    "gh-pages": "^4.0.0",
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
