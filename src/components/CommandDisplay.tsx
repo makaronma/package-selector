@@ -3,7 +3,8 @@ import { useMemo, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { usePackages } from '../hooks/usePackages';
-
+import { Dependency } from '../types';
+import { getVer } from '../utils';
 
 
 const CommandDisplay = () => {
@@ -26,8 +27,13 @@ const CommandDisplay = () => {
       add: devDepToAdd,
     };
 
-    dependencies.forEach((d) => depGroup[d.action].push(`${d.name}@${d.version}`) );
-    devDependencies.forEach((d) => devDepGroup[d.action].push(`${d.name}@${d.version}`) );
+    dependencies.forEach((d) =>
+      depGroup[d.action].push(`${d.name}${getVer(d)}`)
+    );
+
+    devDependencies.forEach((d) =>
+      devDepGroup[d.action].push(`${d.name}${getVer(d)}`)
+    );
     
     return `
         ${depToAdd.length>0?`yarn add ${depToAdd.join(" ")};`:''} 

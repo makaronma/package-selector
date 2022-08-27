@@ -3,10 +3,33 @@ export interface PackageInputType {
   devDependencies?: Record<string, string>;
 }
 
-export type DependencyAction = "add" | "remove" | "upgrade";
+export const dependencyActions = ["add", "remove", "upgrade"] as const;
+export const dependencyTargetVersion = ["default", "current", "latest"] as const;
+
+export type DependencyAction = typeof dependencyActions[number];
+export type DependencyTargetVersion = typeof dependencyTargetVersion[number];
 
 export interface Dependency {
   name: string;
   version: string;
   action: DependencyAction;
+  targetVersion: DependencyTargetVersion;
 }
+
+export type GetDependencyTargetType<T extends "selectAction" | "selectVersion"> =
+  T extends "selectAction"
+    ? DependencyAction
+    : T extends "selectVersion"
+    ? DependencyTargetVersion
+    : never;
+
+export type RadioColProps<T extends "selectAction" | "selectVersion"> = {
+  depName: string;
+  value: GetDependencyTargetType<T>;
+  choice?: GetDependencyTargetType<T>;
+  setChoice: React.Dispatch<React.SetStateAction<GetDependencyTargetType<T>>>;
+  isDev?: boolean;
+};
+
+export type SelectActionColTypes = RadioColProps<"selectAction">;
+export type SelectTargetVerColTypes = RadioColProps<"selectVersion">;

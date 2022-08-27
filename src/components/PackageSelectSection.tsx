@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { usePackages } from '../hooks/usePackages';
 import { transformDefaultDep } from '../utils';
@@ -30,51 +30,46 @@ const PackageSelectSection = () => {
   const devDepRows = useMemo(
     () =>
     devDependencies.map((d, i) => (
-        <DepRow dep={d} index={i} key={`dep-row-${d.name}`} isDev />
+        <DepRow dep={d} index={i} key={`devDep-row-${d.name}`} isDev />
       )),
     [devDependencies]
   );
 
   return (
     <div className="">
-      <div className="mb-8">
-        <p className="mb-2">Dependencies:</p>
-        <table className="mx-auto">
-          <thead>
-            <tr className="[&>td:not(:first-child)]:text-center">
-              <td>Package Name</td>
-              <td>Version</td>
-              <td>add</td>
-              <td>remove</td>
-              <td>upgrade</td>
-            </tr>
-          </thead>
-          <tbody className="border-2 border-black">
-            {depRows}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="mb-8">
-        <p className="mb-2">DevDependencies:</p>
-        <table className="mx-auto">
-          <thead>
-            <tr className="[&>td:not(:first-child)]:text-center">
-              <td>Package Name</td>
-              <td>Version</td>
-              <td>add</td>
-              <td>remove</td>
-              <td>upgrade</td>
-            </tr>
-          </thead>
-          <tbody className="border-2 border-black">
-            {devDepRows}
-          </tbody>
-        </table>
-      </div>
-
+      <DepTable name={"Dependencies"}>
+        <tbody className="border-2 border-black">{depRows}</tbody>
+      </DepTable>
+      <DepTable name={"DevDependencies"}>
+        <tbody className="border-2 border-black">{devDepRows}</tbody>
+      </DepTable>
     </div>
   );
 };
+
+const DepTable = ({ children, name}: { children: React.ReactNode, name: string })=>(
+  <div className="mb-8">
+    <p className="mb-2">{name}:</p>
+    <table className="mx-auto">
+      <TableHead />
+      {children}
+    </table>
+  </div>
+);
+
+const TableHead = () => (
+  <thead>
+    <tr className="[&>td:not(:first-child)]:text-center">
+      <td>Package Name</td>
+      <td>Ver.</td>
+      <td>Add</td>
+      <td>Remove</td>
+      <td>Upgrade</td>
+      <td>Default</td>
+      <td>Current</td>
+      <td>Latest</td>
+    </tr>
+  </thead>
+);
 
 export default PackageSelectSection;

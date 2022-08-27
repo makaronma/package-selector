@@ -1,11 +1,13 @@
-import { useCallback, useState } from "react";
-import { usePackages } from "../hooks/usePackages";
-import { Dependency, DependencyAction } from "../types";
+import { useState } from 'react';
 
-const actions: DependencyAction[] = ["add", "remove", "upgrade"];
+import { Dependency, DependencyAction, dependencyActions, DependencyTargetVersion, dependencyTargetVersion } from '../types';
+import SelectActionCol from './SelectActionCol';
+import SelectTargetVerCol from './SelectTargetVersionCol';
 
 const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?: boolean }) => {
-  const [choice, setChoice] = useState<DependencyAction>('add');
+  const [actionChoice, setActionChoice] = useState<DependencyAction>('add');
+  const [versionChoise, setVersionChoise] = useState<DependencyTargetVersion>('default');
+  
   return (
     <tr
       className="border-black 
@@ -16,14 +18,24 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
     >
       <td>{dep.name}</td>
       <td>{dep.version}</td>
-      {actions.map((a) => (
-        <RadioCol
+      {dependencyActions.map((a) => (
+        <SelectActionCol
           depName={dep.name}
           value={a}
-          setChoice={setChoice}
-          choice={choice}
+          setChoice={setActionChoice}
+          choice={actionChoice}
           isDev={isDev}
           key={`radio-${index}-${a}`}
+        />
+      ))}
+      {dependencyTargetVersion.map(v=>(
+        <SelectTargetVerCol
+          depName={dep.name}
+          value={v}
+          setChoice={setVersionChoise}
+          choice={versionChoise}
+          isDev={isDev}
+          key={`radio-${index}-${v}`}
         />
       ))}
     </tr>
@@ -31,57 +43,3 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
 }
 
 export default DepRow;
-
-
-interface RadioColProps {
-  depName: string;
-  value: DependencyAction;
-  choice?: DependencyAction;
-  setChoice: React.Dispatch<React.SetStateAction<DependencyAction>>;
-  isDev?: boolean;
-}
-
-const RadioCol = ({ depName, value, choice, setChoice, isDev }: RadioColProps) => {
-  const { setDependencies, setDevDependencies } = usePackages();
-
-  const onChange = useCallback(() => {
-    setChoice(value);
-    if (!setDependencies || !setDevDependencies) return;
-    if(isDev){
-      setDevDependencies((prev) =>
-        prev.map((dep) =>
-          dep.name === depName
-            ? {
-                ...dep,
-                action: value,
-              }
-            : dep
-        )
-      );
-      return;
-    }
-    setDependencies((prev) =>
-      prev.map((dep) =>
-        dep.name === depName
-          ? {
-              ...dep,
-              action: value,
-            }
-          : dep
-      )
-    );
-  }, [depName, isDev, setChoice, setDependencies, setDevDependencies, value]);
-
-  return (
-    <td>
-      <input
-        type="radio"
-        name={`radio-${depName}`}
-        value={value}
-        onChange={onChange}
-        checked={choice === value}
-        className="radio checked:bg-blue-500"
-      />
-    </td>
-  );
-};
