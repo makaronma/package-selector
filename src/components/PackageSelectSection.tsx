@@ -1,6 +1,7 @@
 import { usePackages } from "../hooks/usePackages";
 import { useReactTable } from '@tanstack/react-table'
 import { useEffect, useMemo } from "react";
+import { transformDefaultDep } from "../utils";
 
 const PackageSelectSection = () => {
   const {
@@ -14,15 +15,8 @@ const PackageSelectSection = () => {
   useEffect(() => {
     if (!setDependencies || !setDevDependencies) return;
     const { dependencies: de, devDependencies: devDe } = dataInput;
-    if (de)
-      setDependencies(
-        Object.entries(de).map((d) => ({ name: d[0], version: d[1] }))
-      );
-
-    if (devDe)
-      setDevDependencies(
-        Object.entries(devDe).map((d) => ({ name: d[0], version: d[1] }))
-      );
+    if (de) setDependencies(transformDefaultDep(de));
+    if (devDe) setDevDependencies(transformDefaultDep(devDe));
   }, [dataInput, setDependencies, setDevDependencies]);  
 
   return (
@@ -31,20 +25,31 @@ const PackageSelectSection = () => {
         <p>Dependencies:</p>
         <table className="mx-auto">
           <thead>
-            <tr>
+            <tr className="[&>td:not(:first-child)]:text-center">
               <td>Package Name</td>
               <td>Version</td>
+              <td>add</td>
+              <td>remove</td>
+              <td>upgrade</td>
             </tr>
           </thead>
           <tbody
-            className="border-[1px] border-black
-                      [&>tr>td]:border-black [&>tr>td]:py-1 [&>tr>td]:px-3
-                      [&>tr:not(:last-child)>td]:border-b-[1px]"
+            className="border-2 border-black
+                      "
           >
             {dependencies.map((d, i) => (
-              <tr className="" key={`d-${d.name}-${i}`}>
-                <td className="border-r-[1px] border-black">{d.name}</td>
+              <tr
+                className="border-black 
+                            [&>td]:min-w-[100px] [&>td]:border-[1px] [&>td]:border-black [&>td]:py-1 [&>td]:px-3
+                            [&>td:not(:first-child)]:text-center
+                            "
+                key={`d-${d.name}-${i}`}
+              >
+                <td>{d.name}</td>
                 <td>{d.version}</td>
+                <td>{d.action.type === "add" ? "y" : ""}</td>
+                <td>{d.action.type === "remove" ? "y" : ""}</td>
+                <td>{d.action.type === "upgrade" ? "y" : ""}</td>
               </tr>
             ))}
           </tbody>
