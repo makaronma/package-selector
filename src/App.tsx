@@ -2,8 +2,7 @@ import CommandDisplay from './components/CommandDisplay';
 import InputArea from './components/InputArea';
 import PackageSelectSection from './components/PackageSelectSection';
 import GithubLogo from './assets/GitHub-Mark-64px.png'
-// TODO: add switch terminal
-// TODO: add switch yarn npm
+// TODO: use react-table
 // TODO: add latest versions display in listing
 // TODO: add single package all versions display
 

@@ -5,9 +5,13 @@ export interface PackageInputType {
 
 export const dependencyActions = ["ignore", "add", "remove", "upgrade"] as const;
 export const dependencyTargetVersions = ["default", "current", "latest"] as const;
+export const terminalTypes = ['VS Code','Mac/Window Terminal'] as const;
+export const packageManagerTypes = ['yarn','npm'] as const;
 
 export type DependencyAction = typeof dependencyActions[number];
 export type DependencyTargetVersion = typeof dependencyTargetVersions[number];
+export type TerminalTypes = typeof terminalTypes[number];
+export type PackageManagerTypes = typeof packageManagerTypes[number];
 
 export interface Dependency {
   name: string;
