@@ -43,7 +43,7 @@ const SelectTargetVerCol = ({ depName, value, choice, setChoice, isDev }: Select
         type="radio"
         name={`radio-select-target-ver-${depName}`}
         value={value}
-        // onChange={onChange}
+        onChange={onChange}
         checked={choice === value}
         className="radio checked:bg-blue-500 m-auto flex"
       />

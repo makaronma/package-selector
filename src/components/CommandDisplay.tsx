@@ -3,7 +3,6 @@ import { useMemo, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { usePackages } from '../hooks/usePackages';
-import { Dependency } from '../types';
 import { getVer } from '../utils';
 
 
@@ -12,34 +11,35 @@ const CommandDisplay = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const command = useMemo((): string => {
-    let depToAdd: string[] = [];
-    let depToRemove: string[] = [];
-    let depToUpgrade: string[] = [];
+    let depToAdds: string[] = [];
+    let depToRemoves: string[] = [];
+    let depToUpgrades: string[] = [];
     
-    let devDepToAdd: string[] = [];
+    let devDepToAdds: string[] = [];
     const depGroup = {
-      add: depToAdd,
-      remove: depToRemove,
-      upgrade: depToUpgrade,
+      add: depToAdds,
+      remove: depToRemoves,
+      upgrade: depToUpgrades,
     };
     const devDepGroup = {
       ...depGroup,
-      add: devDepToAdd,
+      add: devDepToAdds,
     };
 
-    dependencies.forEach((d) =>
-      depGroup[d.action].push(`${d.name}${getVer(d)}`)
-    );
+    dependencies.forEach((d) => {
+      if(d.action !== "ignore") depGroup[d.action].push(`${d.name}${getVer(d)}`)
+    });
 
-    devDependencies.forEach((d) =>
-      devDepGroup[d.action].push(`${d.name}${getVer(d)}`)
-    );
+    devDependencies.forEach((d) => {
+      if(d.action !== "ignore") devDepGroup[d.action].push(`${d.name}${getVer(d)}`)
+    });
+
     
     return `
-        ${depToAdd.length>0?`yarn add ${depToAdd.join(" ")};`:''} 
-        ${depToRemove.length>0?`yarn remove ${depToRemove.join(" ")};`:''} 
-        ${depToUpgrade.length>0?`yarn upgrade ${depToUpgrade.join(" ")};`:''} 
-        ${devDepToAdd.length>0?`yarn add -D ${devDepToAdd.join(" ")};`:''} 
+        ${depToAdds.length>0?`yarn add ${depToAdds.join(" ")};`:''} 
+        ${depToRemoves.length>0?`yarn remove ${depToRemoves.join(" ")};`:''} 
+        ${depToUpgrades.length>0?`yarn upgrade ${depToUpgrades.join(" ")};`:''} 
+        ${devDepToAdds.length>0?`yarn add -D ${devDepToAdds.join(" ")};`:''} 
       `
     ;
   }, [dependencies, devDependencies]);

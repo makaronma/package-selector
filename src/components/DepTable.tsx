@@ -1,3 +1,6 @@
+import { dependencyActions, dependencyTargetVersions } from "../types";
+import * as _ from 'lodash'
+
 const DepTable = ({ children }: { children: React.ReactNode }) => (
   <table className="mx-auto overflow-hidden rounded-xl shadow-lg">
     <TableHead />
@@ -10,18 +13,14 @@ const TableHead = () => (
     <tr className="text-lg font-semibold [&>td]:border-black  ">
       <td className="">Package Name</td>
       <td>Ver.</td>
-      <td colSpan={3}>Select Action</td>
-      <td colSpan={3}>Select Version</td>
+      <td colSpan={dependencyActions.length}>Select Action</td>
+      <td colSpan={dependencyTargetVersions.length}>Select Version</td>
     </tr>
     <tr className="[&>td]:border-black">
       <td></td>
       <td className=""></td>
-      <td>Add</td>
-      <td>Remove</td>
-      <td>Upgrade</td>
-      <td className="">Default</td>
-      <td>Current</td>
-      <td>Latest</td>
+      {dependencyActions.map(d=><td key={`dep-action-${d}`}>{_.capitalize(d)}</td>)}
+      {dependencyTargetVersions.map(d=><td key={`dep-target-ver-${d}`}>{_.capitalize(d)}</td>)}
     </tr>
   </thead>
 );

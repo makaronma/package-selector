@@ -1,13 +1,12 @@
 import { useState } from 'react';
 
-import { Dependency, DependencyAction, dependencyActions, DependencyTargetVersion, dependencyTargetVersion } from '../types';
+import { Dependency, DependencyAction, dependencyActions, DependencyTargetVersion, dependencyTargetVersions } from '../types';
 import SelectActionCol from './SelectActionCol';
 import SelectTargetVerCol from './SelectTargetVersionCol';
 
 const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?: boolean }) => {
-  const [actionChoice, setActionChoice] = useState<DependencyAction>('add');
-  const [versionChoise, setVersionChoise] = useState<DependencyTargetVersion>('default');
-  
+  const [actionChoice, setActionChoice] = useState<DependencyAction>(dependencyActions[0]);
+  const [versionChoise, setVersionChoise] = useState<DependencyTargetVersion>(dependencyTargetVersions[0]);
   return (
     <tr
       className="border-black 
@@ -29,7 +28,7 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
           key={`radio-${index}-${a}`}
         />
       ))}
-      {dependencyTargetVersion.map(v=>(
+      {dependencyTargetVersions.map(v=>(
         <SelectTargetVerCol
           depName={dep.name}
           value={v}

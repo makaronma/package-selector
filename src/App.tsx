@@ -2,9 +2,10 @@ import CommandDisplay from './components/CommandDisplay';
 import InputArea from './components/InputArea';
 import PackageSelectSection from './components/PackageSelectSection';
 
-// TODO: add 'ignore action type'
 // TODO: add a button to set same choice for all row
 // TODO: add switch terminal
+// TODO: add single package all versions display
+// TODO: add latest versions display in listing
 
 const App = () => {
   return (

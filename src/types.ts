@@ -3,11 +3,11 @@ export interface PackageInputType {
   devDependencies?: Record<string, string>;
 }
 
-export const dependencyActions = ["add", "remove", "upgrade"] as const;
-export const dependencyTargetVersion = ["default", "current", "latest"] as const;
+export const dependencyActions = ["ignore", "add", "remove", "upgrade"] as const;
+export const dependencyTargetVersions = ["default", "current", "latest"] as const;
 
 export type DependencyAction = typeof dependencyActions[number];
-export type DependencyTargetVersion = typeof dependencyTargetVersion[number];
+export type DependencyTargetVersion = typeof dependencyTargetVersions[number];
 
 export interface Dependency {
   name: string;
