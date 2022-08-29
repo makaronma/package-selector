@@ -1,5 +1,5 @@
 import { dependencyActions, dependencyTargetVersions } from "../types";
-import * as _ from 'lodash'
+import capitalize from 'lodash/capitalize'
 
 const DepTable = ({ children }: { children: React.ReactNode }) => (
   <table className="mx-auto overflow-hidden rounded-xl shadow-lg">
@@ -19,8 +19,8 @@ const TableHead = () => (
     <tr className="[&>td]:border-black">
       <td></td>
       <td className=""></td>
-      {dependencyActions.map(d=><td key={`dep-action-${d}`}>{_.capitalize(d)}</td>)}
-      {dependencyTargetVersions.map(d=><td key={`dep-target-ver-${d}`}>{_.capitalize(d)}</td>)}
+      {dependencyActions.map(d=><td key={`dep-action-${d}`}>{capitalize(d)}</td>)}
+      {dependencyTargetVersions.map(d=><td key={`dep-target-ver-${d}`}>{capitalize(d)}</td>)}
     </tr>
   </thead>
 );
