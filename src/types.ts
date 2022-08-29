@@ -27,7 +27,7 @@ export type RadioColProps<T extends "selectAction" | "selectVersion"> = {
   depName: string;
   value: GetDependencyTargetType<T>;
   choice?: GetDependencyTargetType<T>;
-  setChoice: React.Dispatch<React.SetStateAction<GetDependencyTargetType<T>>>;
+  setChoice: (choice: GetDependencyTargetType<T>) => void;
   isDev?: boolean;
 };
 

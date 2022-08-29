@@ -29,3 +29,6 @@ export const getVer = (d: Dependency) =>
     : d.targetVersion === "latest"
     ? "@latest"
     : "";
+
+export const strEqualToArrOfStr = <T extends string>(str: string,  strsArr: readonly string[]): str is T =>
+  strsArr.reduce((prev, curr) => (prev ? prev : str === curr), false);

@@ -48,7 +48,7 @@ const PackageSelectSection = () => {
         <p className="mx-auto mb-5 w-fit border-b-2 border-slate-400 py-1 px-20 text-xl font-bold">
           Dev Dependencies:
         </p>
-        <DepTable>{devDepRows}</DepTable>
+        <DepTable isDev>{devDepRows}</DepTable>
       </div>
     </div>
   );

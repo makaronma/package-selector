@@ -1,12 +1,32 @@
-import { useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
-import { Dependency, DependencyAction, dependencyActions, DependencyTargetVersion, dependencyTargetVersions } from '../types';
+import { usePackages } from '../hooks/usePackages';
+import { Dependency, dependencyActions, dependencyTargetVersions, SelectActionColTypes } from '../types';
 import SelectActionCol from './SelectActionCol';
 import SelectTargetVerCol from './SelectTargetVersionCol';
 
 const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?: boolean }) => {
-  const [actionChoice, setActionChoice] = useState<DependencyAction>(dependencyActions[0]);
-  const [versionChoise, setVersionChoise] = useState<DependencyTargetVersion>(dependencyTargetVersions[0]);
+  const { setDependencies, setDevDependencies, dependencies, devDependencies } = usePackages();
+  const setDeps = isDev ? setDevDependencies : setDependencies;
+  const deps = isDev ? devDependencies : dependencies;
+
+  const actionChoice = useMemo(
+    () => deps.find((d) => d.name === dep.name)?.action,
+    [dep.name, deps]
+  );
+  const versionChoice = useMemo(
+    () => deps.find((d) => d.name === dep.name)?.targetVersion,
+    [dep.name, deps]
+  );
+
+  const setActionChoice = useCallback ((choice:NonNullable<SelectActionColTypes['choice']>) => {
+    if (!setDeps) return;
+    setDeps(prev => prev.map(d => d.name === dep.name ? {
+      ...d,
+      action: choice
+    } : d))
+  }, [dep.name, setDeps])
+
   return (
     <tr
       className="border-black 
@@ -32,8 +52,8 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
         <SelectTargetVerCol
           depName={dep.name}
           value={v}
-          setChoice={setVersionChoise}
-          choice={versionChoise}
+          setChoice={()=>{}}
+          choice={versionChoice}
           isDev={isDev}
           key={`radio-${index}-${v}`}
         />
