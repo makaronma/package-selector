@@ -20,11 +20,14 @@ const InputArea = () => {
           setisInputValid(true);
           setDataInput(data);
         },
-        () => setisInputValid(false)
+        () => {
+          setisInputValid(false);
+          setDataInput({ dependencies: undefined, devDependencies: undefined });
+        }
+        );
+      },
+      [setDataInput, setisInputValid]
       );
-    },
-    [setDataInput, setisInputValid]
-  );
 
   useEffect(() => {
     if (!textAreaRef.current) return;

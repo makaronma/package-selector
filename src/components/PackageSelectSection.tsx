@@ -18,7 +18,9 @@ const PackageSelectSection = () => {
     if (!setDependencies || !setDevDependencies) return;
     const { dependencies: de, devDependencies: devDe } = dataInput;
     if (de) setDependencies(transformDefaultDep(de));
+    else setDependencies([]);
     if (devDe) setDevDependencies(transformDefaultDep(devDe));
+    else setDevDependencies([]);
   }, [dataInput, setDependencies, setDevDependencies]);  
 
   const depRows = useMemo(
