@@ -4,7 +4,7 @@
   "homepage": "https://makaronma.github.io/package-selector",
   "private": true,
   "dependencies": {
-    "@heroicons/react": "^2.0.8",
+    "@heroicons/react": "^2.0.10",
     "@tanstack/react-table": "^8.5.11",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
