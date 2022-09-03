@@ -1,4 +1,4 @@
-import { DependencyAction, dependencyActions, DependencyTargetVersion, dependencyTargetVersions } from "../types";
+import { DependencyAction, dependencyActions, DependencyTargetVersion, dependencyTargetVersions } from "../types/userDependency";
 import capitalize from 'lodash/capitalize'
 import { usePackages } from "../hooks/usePackages";
 import { useCallback, useMemo } from "react";

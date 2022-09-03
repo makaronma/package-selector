@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
 import { usePackages } from '../hooks/usePackages';
-import { Dependency, dependencyActions, dependencyTargetVersions, SelectActionColTypes } from '../types';
+import { Dependency, dependencyActions, dependencyTargetVersions, SelectActionColTypes } from '../types/userDependency';
 import SelectActionCol from './SelectActionCol';
 import SelectTargetVerCol from './SelectTargetVersionCol';
 
