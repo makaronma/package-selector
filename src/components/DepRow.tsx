@@ -1,7 +1,10 @@
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
+import { getDepDetail } from '../api';
 
 import { usePackages } from '../hooks/usePackages';
-import { Dependency, dependencyActions, dependencyTargetVersions, SelectActionColTypes } from '../types';
+import { DependencyDetail } from '../types/dependencyDetail';
+import { Dependency, dependencyActions, dependencyTargetVersions, SelectActionColTypes } from '../types/userDependency';
 import SelectActionCol from './SelectActionCol';
 import SelectTargetVerCol from './SelectTargetVersionCol';
 
@@ -38,6 +41,7 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
     >
       <td>{dep.name}</td>
       <td>{dep.version}</td>
+      <DepLatestVerCell dep={dep} />
       {dependencyActions.map((a) => (
         <SelectActionCol
           depName={dep.name}
@@ -61,5 +65,51 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
     </tr>
   );
 }
+
+// TODO: escape '/'
+const DepLatestVerCell = ({ dep }: { dep: Dependency }) => {
+  const { data: depDetail } = useQuery<DependencyDetail>(
+    ["dep-detail", dep.name],
+    getDepDetail(dep.name)
+  );
+
+  const checkHasNewer = useCallback(
+    (num: number) =>
+      depDetail?.version &&
+      depDetail.version.split(".")[num] > dep.version.split(".")[num],
+    [dep, depDetail]
+  );
+  
+  const hasNewerMajor = useMemo(()=>checkHasNewer(0),[checkHasNewer]);
+  const hasNewerMinor = useMemo(()=>checkHasNewer(1),[checkHasNewer]);
+  const hasNewerPatch = useMemo(()=>checkHasNewer(2),[checkHasNewer]);
+
+  return (
+    <td
+      className={`${
+        hasNewerMajor
+          ? "bg-green-200"
+          : hasNewerMinor
+          ? "bg-orange-200"
+          : hasNewerPatch
+          ? "bg-amber-100"
+          : ""
+      }`}
+    >
+      {depDetail?.repository?.url ? (
+        <a
+          href={depDetail.repository.url.replace(/git\+|\.git/g, '')}
+          target="_blank"
+          rel="noreferrer"
+          className="underline"
+        >
+          {depDetail?.version}
+        </a>
+      ) : (
+        <span>{depDetail?.version}</span>
+      )}
+    </td>
+  );
+};
 
 export default DepRow;
