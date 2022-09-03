@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { usePackages } from '../hooks/usePackages';
-import { DependencyAction, packageManagerTypes, PackageManagerTypes, terminalTypes, TerminalTypes } from '../types';
+import { DependencyAction, packageManagerTypes, PackageManagerTypes, terminalTypes, TerminalTypes } from '../types/userDependency';
 import { getVer } from "../utils";
 
 const terminalCommand: Record<
