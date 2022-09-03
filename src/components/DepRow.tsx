@@ -73,7 +73,32 @@ const DepLatestVerCell = ({ dep }: { dep: Dependency }) => {
     getDepDetail(dep.name)
   );
 
-  return <td>{depDetail?.collected?.metadata?.version}</td>;
+  const checkHasNewer = useCallback(
+    (num: number) =>
+      depDetail?.version &&
+      depDetail.version.split(".")[num] > dep.version.split(".")[num],
+    [dep, depDetail]
+  );
+  
+  const hasNewerMajor = useMemo(()=>checkHasNewer(0),[checkHasNewer]);
+  const hasNewerMinor = useMemo(()=>checkHasNewer(1),[checkHasNewer]);
+  const hasNewerPatch = useMemo(()=>checkHasNewer(2),[checkHasNewer]);
+
+  return (
+    <td
+      className={`${
+        hasNewerMajor
+          ? "bg-green-200"
+          : hasNewerMinor
+          ? "bg-orange-200"
+          : hasNewerPatch
+          ? "bg-amber-100"
+          : ""
+      }`}
+    >
+      {depDetail?.version}
+    </td>
+  );
 };
 
 export default DepRow;
