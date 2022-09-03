@@ -96,7 +96,18 @@ const DepLatestVerCell = ({ dep }: { dep: Dependency }) => {
           : ""
       }`}
     >
-      {depDetail?.version}
+      {depDetail?.repository?.url ? (
+        <a
+          href={depDetail.repository.url.replace(/git\+|\.git/g, '')}
+          target="_blank"
+          rel="noreferrer"
+          className="underline"
+        >
+          {depDetail?.version}
+        </a>
+      ) : (
+        <span>{depDetail?.version}</span>
+      )}
     </td>
   );
 };
