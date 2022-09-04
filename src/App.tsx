@@ -3,7 +3,6 @@ import InputArea from './components/InputArea';
 import PackageSelectSection from './components/PackageSelectSection';
 import GithubLogo from './assets/GitHub-Mark-64px.png'
 
-// https://api-docs.npms.io/
 // TODO: add latest versions display in listing(react-query, debounce)
 // TODO: add single package all versions display
 // TODO: fixed table header

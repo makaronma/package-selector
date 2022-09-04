@@ -1,135 +1,87 @@
 export interface DependencyDetail {
-  analyzedAt?: string;
-  collected?:  Collected;
-  evaluation?: Evaluation;
-  score?:      Score;
+  name?:                    string;
+  description?:             string;
+  keywords?:                string[];
+  version?:                 string;
+  homepage?:                string;
+  bugs?:                    Bugs;
+  license?:                 string;
+  main?:                    string;
+  exports?:                 Exports;
+  repository?:              Repository;
+  engines?:                 Engines;
+  dependencies?:            Dependencies;
+  browserify?:              Browserify;
+  gitHead?:                 string;
+  _id?:                     string;
+  _nodeVersion?:            string;
+  _npmVersion?:             string;
+  dist?:                    Dist;
+  _npmUser?:                NpmUser;
+  directories?:             Directories;
+  maintainers?:             NpmUser[];
+  _npmOperationalInternal?: NpmOperationalInternal;
+  _hasShrinkwrap?:          boolean;
 }
 
-interface Collected {
-  metadata?: Metadata;
-  npm?:      Npm;
-  source?:   Source;
+export interface NpmOperationalInternal {
+  host?: string;
+  tmp?:  string;
 }
 
-interface Metadata {
-  name?:              string;
-  scope?:             string;
-  version?:           string;
-  description?:       string;
-  keywords?:          string[];
-  date?:              string;
-  publisher?:         Publisher;
-  maintainers?:       Publisher[];
-  repository?:        Repository;
-  links?:             Links;
-  license?:           string;
-  dependencies?:      Dependencies;
-  releases?:          Release[];
-  hasSelectiveFiles?: boolean;
+export interface NpmUser {
+  name?:  string;
+  email?: string;
 }
 
-interface Dependencies {
+export interface Browserify {
+  transform?: string[];
+}
+
+export interface Bugs {
+  url?: string;
+}
+
+export interface Dependencies {
   "loose-envify"?: string;
 }
 
-interface Links {
-  npm?:        string;
-  homepage?:   string;
-  repository?: string;
-  bugs?:       string;
+export interface Directories {
 }
 
-interface Publisher {
-  username?: string;
-  email?:    string;
+export interface Dist {
+  integrity?:       string;
+  shasum?:          string;
+  tarball?:         string;
+  fileCount?:       number;
+  unpackedSize?:    number;
+  signatures?:      Signature[];
+  "npm-signature"?: string;
 }
 
-interface Release {
-  from?:  string;
-  to?:    string;
-  count?: number;
+export interface Signature {
+  keyid?: string;
+  sig?:   string;
 }
 
-interface Repository {
+export interface Engines {
+  node?: string;
+}
+
+export interface Exports {
+  "."?:                 Empty;
+  "./package.json"?:    string;
+  "./jsx-runtime"?:     string;
+  "./jsx-dev-runtime"?: string;
+}
+
+export interface Empty {
+  "react-server"?: string;
+  default?:        string;
+}
+
+export interface Repository {
   type?:      string;
   url?:       string;
   directory?: string;
-}
-
-interface Npm {
-  downloads?:  Release[];
-  starsCount?: number;
-}
-
-interface Source {
-  files?:    Files;
-  badges?:   Badge[];
-  linters?:  string[];
-  coverage?: number;
-}
-
-interface Badge {
-  urls?: Urls;
-  info?: Info;
-}
-
-interface Info {
-  service?:    string;
-  type?:       string;
-  modifiers?: Modifiers;
-}
-
-interface Modifiers {
-  type?: string;
-}
-
-interface Urls {
-  original?: string;
-  shields?:  string;
-  content?:  string;
-  service?: string;
-}
-
-interface Files {
-  readmeSize?:   number;
-  testsSize?:    number;
-  hasChangelog?: boolean;
-}
-
-interface Evaluation {
-  quality?:     Quality;
-  popularity?:  Popularity;
-  maintenance?: Maintenance;
-}
-
-interface Maintenance {
-  releasesFrequency?:  number;
-  commitsFrequency?:   number;
-  openIssues?:         number;
-  issuesDistribution?: number;
-}
-
-interface Popularity {
-  communityInterest?:     number;
-  downloadsCount?:        number;
-  downloadsAcceleration?: number;
-  dependentsCount?:       number;
-}
-
-interface Quality {
-  carefulness?: number;
-  tests?:       number;
-  health?:      number;
-  branding?:    number;
-}
-
-interface Score {
-  final?:  number;
-  detail?: Detail;
-}
-
-interface Detail {
-  quality?:     number;
-  popularity?:  number;
-  maintenance?: number;
 }
