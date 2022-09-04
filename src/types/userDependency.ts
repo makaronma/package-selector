@@ -27,7 +27,7 @@ export type GetDependencyTargetType<T extends "selectAction" | "selectVersion"> 
     ? DependencyTargetVersion
     : never;
 
-export type RadioColProps<T extends "selectAction" | "selectVersion"> = {
+export type RadioCellProps<T extends "selectAction" | "selectVersion"> = {
   depName: string;
   value: GetDependencyTargetType<T>;
   choice?: GetDependencyTargetType<T>;
@@ -35,5 +35,5 @@ export type RadioColProps<T extends "selectAction" | "selectVersion"> = {
   isDev?: boolean;
 };
 
-export type SelectActionColTypes = RadioColProps<"selectAction">;
-export type SelectTargetVerColTypes = RadioColProps<"selectVersion">;
+export type SelectActionCellTypes = RadioCellProps<"selectAction">;
+export type SelectTargetVerCellTypes = RadioCellProps<"selectVersion">;

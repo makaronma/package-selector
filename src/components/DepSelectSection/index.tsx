@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import { usePackages } from '../hooks/usePackages';
-import { transformDefaultDep } from '../utils';
-import DepRow from './DepRow';
-import DepTable from './DepTable';
+import { usePackages } from '../../hooks/usePackages';
+import { transformDefaultDep } from '../../utils';
+import BaseTable from './BaseTable';
+import DepRow from './Rows/DepRow';
 
 const PackageSelectSection = () => {
   const {
@@ -38,19 +38,20 @@ const PackageSelectSection = () => {
     [devDependencies]
   );
 
+
   return (
     <div className="mb-20">
       <div className="mb-12">
         <p className="mx-auto mb-5 w-fit border-b-2 border-slate-400 py-1 px-20 text-xl font-bold">
           Dependencies:
         </p>
-        <DepTable>{depRows}</DepTable>
+        <BaseTable>{depRows}</BaseTable>
       </div>
       <div className="mb-12">
         <p className="mx-auto mb-5 w-fit border-b-2 border-slate-400 py-1 px-20 text-xl font-bold">
           Dev Dependencies:
         </p>
-        <DepTable isDev>{devDepRows}</DepTable>
+        <BaseTable isDev>{devDepRows}</BaseTable>
       </div>
     </div>
   );

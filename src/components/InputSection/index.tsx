@@ -1,13 +1,13 @@
-import { CheckCircleIcon, XCircleIcon, ArrowDownIcon } from '@heroicons/react/24/solid';
-
+import { ArrowDownIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import { useCallback, useEffect, useRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import exampleJson from '../exampleJson';
-import { usePackages } from '../hooks/usePackages';
-import { processDataFromInput } from '../utils';
+import exampleJson from '../../exampleJson';
+import { usePackages } from '../../hooks/usePackages';
+import { processDataFromInput } from '../../utils';
 
-const InputArea = () => {
+
+const InputSection = () => {
   const { isInputValid, setisInputValid, setDataInput } = usePackages();
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -67,4 +67,4 @@ const InputArea = () => {
     </div>
   );
 };
-export default InputArea;
+export default InputSection;
