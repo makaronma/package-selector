@@ -2,9 +2,15 @@ import { ClipboardDocumentIcon } from '@heroicons/react/24/outline';
 import { useMemo, useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { usePackages } from '../hooks/usePackages';
-import { DependencyAction, packageManagerTypes, PackageManagerTypes, terminalTypes, TerminalTypes } from '../types/userDependency';
-import { getVer } from "../utils";
+import { usePackages } from '../../hooks/usePackages';
+import {
+  DependencyAction,
+  PackageManagerTypes,
+  packageManagerTypes,
+  TerminalTypes,
+  terminalTypes,
+} from '../../types/userDependency';
+import { getVer } from '../../utils';
 
 const terminalCommand: Record<
   PackageManagerTypes,
@@ -22,7 +28,7 @@ const terminalCommand: Record<
   },
 };
 
-const CommandDisplay = () => {
+const CommandDisplaySection = () => {
   const { dependencies, devDependencies } = usePackages();
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [terminalType, setTerminalType] = useState<TerminalTypes>("VS Code");
@@ -111,4 +117,4 @@ const CommandDisplay = () => {
   );
 }
 
-export default CommandDisplay;
+export default CommandDisplaySection;

@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
 
-import { usePackages } from '../hooks/usePackages';
-import { SelectActionColTypes } from '../types/userDependency';
+import { usePackages } from '../../../hooks/usePackages';
+import { SelectActionCellTypes } from '../../../types/userDependency';
 
-
-const RadioCol = ({ depName, value, choice, setChoice, isDev }: SelectActionColTypes) => {
+const SelectActionCell = ({ depName, value, choice, setChoice, isDev }: SelectActionCellTypes) => {
   const { setDependencies, setDevDependencies } = usePackages();
 
   const onChange = useCallback(() => {
@@ -51,4 +50,4 @@ const RadioCol = ({ depName, value, choice, setChoice, isDev }: SelectActionColT
   );
 };
 
-export default RadioCol;
+export default SelectActionCell;
