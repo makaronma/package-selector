@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { usePackages } from '../hooks/usePackages';
-import { SelectActionColTypes } from '../types';
+import { SelectActionColTypes } from '../types/userDependency';
 
 
 const RadioCol = ({ depName, value, choice, setChoice, isDev }: SelectActionColTypes) => {

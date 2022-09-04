@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { usePackages } from '../hooks/usePackages';
-import { SelectTargetVerColTypes } from '../types';
+import { SelectTargetVerColTypes } from '../types/userDependency';
 
 
 const SelectTargetVerCol = ({ depName, value, choice, setChoice, isDev }: SelectTargetVerColTypes) => {

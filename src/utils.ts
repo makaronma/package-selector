@@ -1,4 +1,4 @@
-import { Dependency, dependencyActions, dependencyTargetVersions, PackageInputType } from "./types";
+import { Dependency, dependencyActions, dependencyTargetVersions, PackageInputType } from "./types/userDependency";
 
 export const processDataFromInput = (
   input: string,
