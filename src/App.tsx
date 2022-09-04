@@ -1,12 +1,15 @@
-import CommandDisplay from './components/CommandDisplay';
-import InputArea from './components/InputArea';
-import PackageSelectSection from './components/PackageSelectSection';
-import GithubLogo from './assets/GitHub-Mark-64px.png'
+import GithubLogo from './assets/GitHub-Mark-64px.png';
+import CommandDisplaySection from './components/CommandDisplaySection';
+import PackageSelectSection from './components/DepSelectSection';
+import InputSection from './components/InputSection';
 
-// TODO: add latest versions display in listing(react-query, debounce)
-// TODO: add single package all versions display
+// TODO: add latest versions display in listing(debounce)
 // TODO: fixed table header
 // TODO: subtitle clickable text layout
+// TODO: useReducer
+// TODO: memo
+// TODO: @/
+// TODO: use immutable helper
 
 const App = () => {
   return (
@@ -19,9 +22,9 @@ const App = () => {
           </a>
         </div>
         <div className=" px-14 pt-6 pb-24">
-          <InputArea />
+          <InputSection />
           <PackageSelectSection />
-          <CommandDisplay />
+          <CommandDisplaySection />
         </div>
       </div>
     </>

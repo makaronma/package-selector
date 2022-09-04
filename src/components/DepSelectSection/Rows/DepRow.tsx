@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
-import { getDepDetail } from '../api';
 
-import { usePackages } from '../hooks/usePackages';
-import { DependencyDetail } from '../types/dependencyDetail';
-import { Dependency, dependencyActions, dependencyTargetVersions, SelectActionColTypes } from '../types/userDependency';
-import SelectActionCol from './SelectActionCol';
-import SelectTargetVerCol from './SelectTargetVersionCol';
+import { getDepDetail } from '../../../api';
+import { usePackages } from '../../../hooks/usePackages';
+import { DependencyDetail } from '../../../types/dependencyDetail';
+import { Dependency, dependencyActions, dependencyTargetVersions, SelectActionCellTypes } from '../../../types/userDependency';
+import SelectActionCell from '../Cells/SelectActionCell';
+import SelectTargetVerCell from '../Cells/SelectTargetVerCell';
 
 const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?: boolean }) => {
   const { setDependencies, setDevDependencies, dependencies, devDependencies } = usePackages();
@@ -22,7 +22,7 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
     [dep.name, deps]
   );
 
-  const setActionChoice = useCallback ((choice:NonNullable<SelectActionColTypes['choice']>) => {
+  const setActionChoice = useCallback ((choice:NonNullable<SelectActionCellTypes['choice']>) => {
     if (!setDeps) return;
     setDeps(prev => prev.map(d => d.name === dep.name ? {
       ...d,
@@ -43,7 +43,7 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
       <td>{dep.version}</td>
       <DepLatestVerCell dep={dep} />
       {dependencyActions.map((a) => (
-        <SelectActionCol
+        <SelectActionCell
           depName={dep.name}
           value={a}
           setChoice={setActionChoice}
@@ -53,7 +53,7 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
         />
       ))}
       {dependencyTargetVersions.map(v=>(
-        <SelectTargetVerCol
+        <SelectTargetVerCell
           depName={dep.name}
           value={v}
           setChoice={()=>{}}
