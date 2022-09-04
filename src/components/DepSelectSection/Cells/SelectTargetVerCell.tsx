@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 
-import { usePackages } from '../hooks/usePackages';
-import { SelectTargetVerColTypes } from '../types/userDependency';
+import { usePackages } from '../../../hooks/usePackages';
+import { SelectTargetVerCellTypes } from '../../../types/userDependency';
 
 
-const SelectTargetVerCol = ({ depName, value, choice, setChoice, isDev }: SelectTargetVerColTypes) => {
+const SelectTargetVerCell = ({ depName, value, choice, setChoice, isDev }: SelectTargetVerCellTypes) => {
   const { setDependencies, setDevDependencies } = usePackages();
 
   const onChange = useCallback(() => {
@@ -51,4 +51,4 @@ const SelectTargetVerCol = ({ depName, value, choice, setChoice, isDev }: Select
   );
 };
 
-export default SelectTargetVerCol;
+export default SelectTargetVerCell;
