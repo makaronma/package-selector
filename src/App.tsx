@@ -2,9 +2,11 @@ import CommandDisplay from './components/CommandDisplay';
 import InputArea from './components/InputArea';
 import PackageSelectSection from './components/PackageSelectSection';
 import GithubLogo from './assets/GitHub-Mark-64px.png'
-// TODO: use react-table
-// TODO: add latest versions display in listing
+
+// TODO: add latest versions display in listing(react-query, debounce)
 // TODO: add single package all versions display
+// TODO: fixed table header
+// TODO: subtitle clickable text layout
 
 const App = () => {
   return (
