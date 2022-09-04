@@ -16,12 +16,14 @@ const TableHead = ({ isDev }: { isDev?: boolean }) => (
     <tr className="text-lg font-semibold [&>td]:border-black  ">
       <td className="">Package Name</td>
       <td>Current Ver.</td>
+      <td>Latest Ver.</td>
       <td colSpan={dependencyActions.length}>Select Action</td>
       <td colSpan={dependencyTargetVersions.length}>Select Version</td>
     </tr>
     <tr className="[&>td]:border-black">
       <td></td>
-      <td className=""></td>
+      <td></td>
+      <td></td>
       {dependencyActions.map(name=><SubTitleCell isDev={isDev} name={name} key={`dep-action-${name}`} />)}
       {dependencyTargetVersions.map(name=><SubTitleCell isDev={isDev} name={name} key={`dep-target-ver-${name}`} />)}
     </tr>

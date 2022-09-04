@@ -1,6 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
+import { getDepDetail } from '../api';
 
 import { usePackages } from '../hooks/usePackages';
+import { DependencyDetail } from '../types/dependencyDetail';
 import { Dependency, dependencyActions, dependencyTargetVersions, SelectActionColTypes } from '../types/userDependency';
 import SelectActionCol from './SelectActionCol';
 import SelectTargetVerCol from './SelectTargetVersionCol';
@@ -38,6 +41,7 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
     >
       <td>{dep.name}</td>
       <td>{dep.version}</td>
+      <DepLatestVerCell dep={dep} />
       {dependencyActions.map((a) => (
         <SelectActionCol
           depName={dep.name}
@@ -61,5 +65,15 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
     </tr>
   );
 }
+
+// TODO: escape '/'
+const DepLatestVerCell = ({ dep }: { dep: Dependency }) => {
+  const { data: depDetail } = useQuery<DependencyDetail>(
+    ["dep-detail", dep.name],
+    getDepDetail(dep.name)
+  );
+
+  return <td>{depDetail?.collected?.metadata?.version}</td>;
+};
 
 export default DepRow;
