@@ -76,7 +76,7 @@ const DepLatestVerCell = ({ dep }: { dep: Dependency }) => {
   const checkHasNewer = useCallback(
     (num: number) =>
       depDetail?.version &&
-      depDetail.version.split(".")[num] > dep.version.split(".")[num],
+      Number(depDetail.version.split(".")[num]) > Number(dep.version.split(".")[num]),
     [dep, depDetail]
   );
   
