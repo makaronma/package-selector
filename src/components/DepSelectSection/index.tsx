@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from "react";
 
-import { usePackages } from '../../hooks/usePackages';
-import { transformDefaultDep } from '../../utils';
-import BaseTable from './BaseTable';
-import DepRow from './Rows/DepRow';
+import { usePackages } from "../../hooks/usePackages";
+import { transformDefaultDep } from "../../utils";
+import BaseTable from "./BaseTable";
+import DepRow from "./Rows/DepRow";
 
 const PackageSelectSection = () => {
   const {

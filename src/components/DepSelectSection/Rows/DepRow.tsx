@@ -1,12 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
-import { useCallback, useMemo } from 'react';
+import { useQuery } from "@tanstack/react-query";
+import { useCallback, useMemo } from "react";
 
-import { getDepDetail } from '../../../api';
-import { usePackages } from '../../../hooks/usePackages';
-import { DependencyDetail } from '../../../types/dependencyDetail';
-import { Dependency, dependencyActions, dependencyTargetVersions, SelectActionCellTypes } from '../../../types/userDependency';
-import SelectActionCell from '../Cells/SelectActionCell';
-import SelectTargetVerCell from '../Cells/SelectTargetVerCell';
+import { getDepDetail } from "../../../api";
+import { usePackages } from "../../../hooks/usePackages";
+import { DependencyDetail } from "../../../types/dependencyDetail";
+// import SelectActionCell from "../Cells/SelectActionCell";
+// import SelectTargetVerCell from "../Cells/SelectTargetVerCell";
+import Constants from "../../../constants";
 
 const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?: boolean }) => {
   const { setDependencies, setDevDependencies, dependencies, devDependencies } = usePackages();
@@ -22,13 +22,13 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
     [dep.name, deps]
   );
 
-  const setActionChoice = useCallback ((choice:NonNullable<SelectActionCellTypes['choice']>) => {
-    if (!setDeps) return;
-    setDeps(prev => prev.map(d => d.name === dep.name ? {
-      ...d,
-      action: choice
-    } : d))
-  }, [dep.name, setDeps])
+  // const setActionChoice = useCallback ((choice:NonNullable<SelectActionCellTypes['choice']>) => {
+  //   if (!setDeps) return;
+  //   setDeps(prev => prev.map(d => d.name === dep.name ? {
+  //     ...d,
+  //     action: choice
+  //   } : d))
+  // }, [dep.name, setDeps])
 
   return (
     <tr
@@ -42,25 +42,27 @@ const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?:
       <td>{dep.name}</td>
       <td>{dep.version}</td>
       <DepLatestVerCell dep={dep} />
-      {dependencyActions.map((a) => (
-        <SelectActionCell
-          depName={dep.name}
-          value={a}
-          setChoice={setActionChoice}
-          choice={actionChoice}
-          isDev={isDev}
-          key={`radio-${index}-${a}`}
-        />
+      {Constants.actionChoices.map((a) => (
+        // <SelectActionCell
+        //   depName={dep.name}
+        //   value={a}
+        //   // setChoice={setActionChoice}
+        //   choice={actionChoice}
+        //   isDev={isDev}
+        //   key={`radio-${index}-${a}`}
+        // />
+        <></>
       ))}
-      {dependencyTargetVersions.map(v=>(
-        <SelectTargetVerCell
-          depName={dep.name}
-          value={v}
-          setChoice={()=>{}}
-          choice={versionChoice}
-          isDev={isDev}
-          key={`radio-${index}-${v}`}
-        />
+      {Constants.targetVersionChoices.map(v=>(
+        // <SelectTargetVerCell
+        //   depName={dep.name}
+        //   value={v}
+        //   setChoice={()=>{}}
+        //   choice={versionChoice}
+        //   isDev={isDev}
+        //   key={`radio-${index}-${v}`}
+        // />
+        <></>
       ))}
     </tr>
   );
@@ -98,7 +100,7 @@ const DepLatestVerCell = ({ dep }: { dep: Dependency }) => {
     >
       {depDetail?.repository?.url ? (
         <a
-          href={depDetail.repository.url.replace(/git\+|\.git/g, '')}
+          href={depDetail.repository.url.replace(/git\+|\.git/g, "")}
           target="_blank"
           rel="noreferrer"
           className="underline"

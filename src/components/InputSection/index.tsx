@@ -1,10 +1,10 @@
-import { ArrowDownIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
-import { useCallback, useEffect, useRef } from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
+import { ArrowDownIcon, CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { useCallback, useEffect, useRef } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
-import exampleJson from '../../exampleJson';
-import { usePackages } from '../../hooks/usePackages';
-import { processDataFromInput } from '../../utils';
+import exampleJson from "../../exampleJson";
+import { usePackages } from "../../hooks/usePackages";
+import { processDataFromInput } from "../../utils";
 
 
 const InputSection = () => {

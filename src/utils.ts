@@ -1,4 +1,5 @@
-import { Dependency, dependencyActions, dependencyTargetVersions, PackageInputType } from "./types/userDependency";
+import Constants from "./constants";
+import { PackageInputType } from "./types/userDependency";
 
 export const processDataFromInput = (
   input: string,
@@ -17,8 +18,8 @@ export const transformDefaultDep = (de: Record<string, string>): Dependency[] =>
   Object.entries(de).map((d) => ({
     name: d[0],
     version: escapeSpecial(d[1]),
-    action: dependencyActions[0],
-    targetVersion: dependencyTargetVersions[0],
+    action: Constants.actionChoices[0],
+    targetVersion: Constants.targetVersionChoices[0],
   } as Dependency));
 
 export const escapeSpecial = (str: string) => str.replace(/[^ 0-9a-zA-Z](?!(?<=\d\.)\d)/g, "");

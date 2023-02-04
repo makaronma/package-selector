@@ -1,18 +1,18 @@
 import { capitalize } from "lodash";
 import { useMemo, useCallback } from "react";
 import { usePackages } from "../../../hooks/usePackages";
-import { DependencyAction, DependencyTargetVersion, dependencyActions, dependencyTargetVersions } from "../../../types/userDependency";
 import { strEqualToArrOfStr } from "../../../utils";
+import Constants from "../../../constants";
 
-const SubTitleCell = ({ name, isDev }: { name: DependencyAction | DependencyTargetVersion, isDev?: boolean }) => {
+const SubTitleCell = ({ name, isDev }: { name: ActionChoice | TargetVersionChoice, isDev?: boolean }) => {
   const { setDependencies, setDevDependencies } = usePackages();
   const setDeps = isDev ? setDevDependencies : setDependencies;
 
   const propToSet = useMemo(
     () =>
-      strEqualToArrOfStr<DependencyAction>(name, dependencyActions)
+      strEqualToArrOfStr<ActionChoice>(name, Constants.actionChoices)
         ? { action: name }
-        : strEqualToArrOfStr<DependencyTargetVersion>(name, dependencyTargetVersions)
+        : strEqualToArrOfStr<TargetVersionChoice>(name, Constants.targetVersionChoices)
         ? { targetVersion: name }
         : {},
     [name]

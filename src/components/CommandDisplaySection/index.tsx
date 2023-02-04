@@ -1,21 +1,20 @@
-import { ClipboardDocumentIcon } from '@heroicons/react/24/outline';
-import { useMemo, useState } from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { ClipboardDocumentIcon } from "@heroicons/react/24/outline";
+import { useMemo, useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import { usePackages } from '../../hooks/usePackages';
-import {
-  DependencyAction,
-  PackageManagerTypes,
-  packageManagerTypes,
-  TerminalTypes,
-  terminalTypes,
-} from '../../types/userDependency';
-import { getVer } from '../../utils';
+import { usePackages } from "../../hooks/usePackages";
+import { getVer } from "../../utils";
+import Constants from "../../constants";
 
 const terminalCommand: Record<
-  PackageManagerTypes,
-  Record<Exclude<DependencyAction, "ignore">, string>
+  PackageManagerType,
+  Record<Exclude<ActionChoice, "ignore">, string>
 > = {
+  pnpm: {
+    add: "pnpm add",
+    remove: "pnpm remove",
+    upgrade: "pnpm up",
+  },
   yarn: {
     add: "yarn add",
     remove: "yarn remove",
@@ -31,20 +30,22 @@ const terminalCommand: Record<
 const CommandDisplaySection = () => {
   const { dependencies, devDependencies } = usePackages();
   const [isCopied, setIsCopied] = useState<boolean>(false);
-  const [terminalType, setTerminalType] = useState<TerminalTypes>("VS Code");
-  const [packageManagerType, setPackageManagerType] = useState<PackageManagerTypes>("yarn");
+  const [terminalType, setTerminalType] = useState<TerminalType>("VS Code");
+  const [packageManagerType, setPackageManagerType] = useState<PackageManagerType>("pnpm");
 
   const command = useMemo((): string => {
-    let depToAdds: string[] = [];
-    let depToRemoves: string[] = [];
-    let depToUpgrades: string[] = [];
+    const depToAdds: string[] = [];
+    const depToRemoves: string[] = [];
+    const depToUpgrades: string[] = [];
     
-    let devDepToAdds: string[] = [];
+    const devDepToAdds: string[] = [];
+
     const depGroup = {
       add: depToAdds,
       remove: depToRemoves,
       upgrade: depToUpgrades,
     };
+    
     const devDepGroup = {
       ...depGroup,
       add: devDepToAdds,
@@ -61,10 +62,10 @@ const CommandDisplaySection = () => {
     const seperator = terminalType === "VS Code" ? ";" : "&&";
     
     return `
-        ${depToAdds.length>0?`${terminalCommand[packageManagerType].add} ${depToAdds.join(" ")} ${seperator}`:''} 
-        ${depToRemoves.length>0?`${terminalCommand[packageManagerType].remove} ${depToRemoves.join(" ")} ${seperator}`:''} 
-        ${depToUpgrades.length>0?`${terminalCommand[packageManagerType].upgrade} ${depToUpgrades.join(" ")} ${seperator}`:''} 
-        ${devDepToAdds.length>0?`${terminalCommand[packageManagerType].add} -D ${devDepToAdds.join(" ")} ${seperator}`:''} 
+        ${depToAdds.length>0?`${terminalCommand[packageManagerType].add} ${depToAdds.join(" ")} ${seperator}`:""} 
+        ${depToRemoves.length>0?`${terminalCommand[packageManagerType].remove} ${depToRemoves.join(" ")} ${seperator}`:""} 
+        ${depToUpgrades.length>0?`${terminalCommand[packageManagerType].upgrade} ${depToUpgrades.join(" ")} ${seperator}`:""} 
+        ${devDepToAdds.length>0?`${terminalCommand[packageManagerType].add} -D ${devDepToAdds.join(" ")} ${seperator}`:""} 
       `
     ;
   }, [dependencies, devDependencies, packageManagerType, terminalType]);
@@ -75,10 +76,10 @@ const CommandDisplaySection = () => {
       <div className="flex items-center justify-between bg-slate-600 px-2">
         <div className="">
           <div className="flex">
-            {terminalTypes.map((t) => (
+            {Constants.terminalTypes.map((t) => (
               <div className={`p-2 mr-2 cursor-pointer ${t === terminalType ? 
-                  'text-white border-b-2 border-white' :
-                  'text-sky-300'}`} 
+                  "text-white border-b-2 border-white" :
+                  "text-sky-300"}`} 
                   key={`choice-${t}`}
                   onClick={()=>setTerminalType(t)}
               >
@@ -87,10 +88,10 @@ const CommandDisplaySection = () => {
             ))}
           </div>
           <div className="flex">
-            {packageManagerTypes.map((p) => (
+            {Constants.packageManagerTypes.map((p) => (
               <div className={`p-2 mr-2 cursor-pointer ${p === packageManagerType ? 
-                  'text-white border-b-2 border-white' :
-                  'text-sky-300'}`} 
+                  "text-white border-b-2 border-white" :
+                  "text-sky-300"}`} 
                   onClick={()=>setPackageManagerType(p)}
                   key={`choice-${p}`}
               >
