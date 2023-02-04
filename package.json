@@ -10,7 +10,8 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "ci": "tsc && eslint .",
+    "tsc": "tsc",
+    "lint": "eslint",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "browserslist": {
