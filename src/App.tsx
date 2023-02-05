@@ -1,6 +1,6 @@
 import GithubLogo from "~assets/GitHub-Mark-64px.png";
 // import CommandDisplaySection from "~/components/CommandDisplaySection";
-// import PackageSelectSection from "~/components/DepSelectSection";
+import DepSelectSection from "~/components/DepSelectSection";
 import InputSection from "~/components/InputSection";
 
 // TODO: use immer + jotai
@@ -21,7 +21,7 @@ const App = () => {
         </div>
         <div className=" px-14 pt-6 pb-24">
           <InputSection />
-          {/* <PackageSelectSection /> */}
+          <DepSelectSection />
           {/* <CommandDisplaySection /> */}
         </div>
       </div>

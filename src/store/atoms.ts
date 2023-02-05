@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 import Constants from "~/constants";
 import { z } from "zod";
+import { escapeSpecial, transformDefaultDepRowData, transformRawDep } from "~/utils";
 
 const dependencyDataSchema = z.record(z.string(), z.string());
 
@@ -30,4 +31,28 @@ export const isJsonTextInputValidAtom = atom<boolean>(
   (get) => get(processedDependencyDataAtom) !== undefined
 );
 
-export const dependencyFieldsAtom = atom<DependencyField[]>([]);
+export const rawDepDataAtom = atom<DependencyBaseData[] | undefined>((get) => {
+  const deps = get(processedDependencyDataAtom)?.dependencies;
+  if (!deps) return undefined;
+  return transformRawDep(deps);
+});
+export const rawDevDepDataAtom = atom<DependencyBaseData[] | undefined>((get) => {
+  const deps = get(processedDependencyDataAtom)?.devDependencies;
+  if (!deps) return undefined;
+  return transformRawDep(deps);
+});
+
+export const depRowDataAtom = atom<DependencyRowData[] | undefined>((get) => {
+  if (!get(isJsonTextInputValidAtom)) return undefined;
+  const deps = get(processedDependencyDataAtom)?.dependencies;
+  if (!deps) return undefined;
+
+  return transformDefaultDepRowData(deps)
+});
+export const devDepRowDataAtom = atom<DependencyRowData[] | undefined>((get) => {
+  if (!get(isJsonTextInputValidAtom)) return undefined;
+  const devDeps = get(processedDependencyDataAtom)?.devDependencies;
+  if (!devDeps) return undefined;
+
+  return transformDefaultDepRowData(devDeps)
+});

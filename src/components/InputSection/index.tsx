@@ -20,6 +20,7 @@ const InputArea = () => {
   useEffect(() => {
     if (textAreaRef.current) textAreaRef.current.style.height = "250px";
   }, []);
+
   return (
     <TextareaAutosize
       ref={textAreaRef}
