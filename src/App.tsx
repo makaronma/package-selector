@@ -1,7 +1,7 @@
-import GithubLogo from "./assets/GitHub-Mark-64px.png";
-import CommandDisplaySection from "./components/CommandDisplaySection";
-import PackageSelectSection from "./components/DepSelectSection";
-import InputSection from "./components/InputSection";
+import GithubLogo from "~assets/GitHub-Mark-64px.png";
+import CommandDisplaySection from "~/components/CommandDisplaySection";
+import PackageSelectSection from "~/components/DepSelectSection";
+import InputSection from "~/components/InputSection";
 
 // TODO: use immer + jotai
 // TODO: add latest versions display in listing(debounce)

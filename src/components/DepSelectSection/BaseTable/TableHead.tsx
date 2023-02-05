@@ -1,5 +1,5 @@
 
-import Constants from "../../../constants";
+import Constants from "~/constants";
 import SubTitleCell from "../Cells/SubTitleCell";
 
 const TableHead = ({ isDev }: { isDev?: boolean }) => (

@@ -1,3 +1,4 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   env: {
     node: true,
@@ -8,6 +9,7 @@ module.exports = {
       version: "detect",
     },
   },
+  ignorePatterns: ["*.js",],
   extends: [
     "eslint:recommended",
     "react-app",

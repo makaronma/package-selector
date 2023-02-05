@@ -2,9 +2,9 @@ import { ClipboardDocumentIcon } from "@heroicons/react/24/outline";
 import { useMemo, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import { usePackages } from "../../hooks/usePackages";
-import { getVer } from "../../utils";
-import Constants from "../../constants";
+import { usePackages } from "~/hooks/usePackages";
+import { getVer } from "~/utils";
+import Constants from "~/constants";
 
 const terminalCommand: Record<
   PackageManagerType,

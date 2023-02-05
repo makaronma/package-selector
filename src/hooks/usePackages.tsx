@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 
-import { PackageInputType } from "../types/userDependency";
+import { PackageInputType } from "~/types/userDependency";
 
 interface PackageContextInterface {
   isInputValid: boolean;

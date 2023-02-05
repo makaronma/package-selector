@@ -1,7 +1,7 @@
 // import { useCallback } from "react";
 
-// import { usePackages } from "../../../hooks/usePackages";
-// import { SelectActionCellTypes } from "../../../types/userDependency";
+// import { usePackages } from "~/hooks/usePackages";
+// import { SelectActionCellTypes } from "~/types/userDependency";
 
 // const SelectActionCell = ({ depName, value, choice, setChoice, isDev }: SelectActionCellTypes) => {
 //   const { setDependencies, setDevDependencies } = usePackages();

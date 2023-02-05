@@ -1,7 +1,7 @@
 // import { useCallback } from "react";
 
-// import { usePackages } from "../../../hooks/usePackages";
-// import { SelectTargetVerCellTypes } from "../../../types/userDependency";
+// import { usePackages } from "~/hooks/usePackages";
+// import { SelectTargetVerCellTypes } from "~/types/userDependency";
 
 
 // const SelectTargetVerCell = ({ depName, value, choice, setChoice, isDev }: SelectTargetVerCellTypes) => {

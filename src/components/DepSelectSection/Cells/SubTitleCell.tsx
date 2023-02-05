@@ -1,8 +1,8 @@
 import { capitalize } from "lodash";
 import { useMemo, useCallback } from "react";
-import { usePackages } from "../../../hooks/usePackages";
-import { strEqualToArrOfStr } from "../../../utils";
-import Constants from "../../../constants";
+import { usePackages } from "~/hooks/usePackages";
+import { strEqualToArrOfStr } from "~/utils";
+import Constants from "~/constants";
 
 const SubTitleCell = ({ name, isDev }: { name: ActionChoice | TargetVersionChoice, isDev?: boolean }) => {
   const { setDependencies, setDevDependencies } = usePackages();

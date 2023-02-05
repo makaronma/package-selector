@@ -2,9 +2,9 @@ import { ArrowDownIcon, CheckCircleIcon, XCircleIcon } from "@heroicons/react/24
 import { useCallback, useEffect, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
-import exampleJson from "../../exampleJson";
-import { usePackages } from "../../hooks/usePackages";
-import { processDataFromInput } from "../../utils";
+import { usePackages } from "~/hooks/usePackages";
+import { processDataFromInput } from "~/utils";
+import Constants from "~/constants";
 
 
 const InputSection = () => {
@@ -62,7 +62,7 @@ const InputSection = () => {
         className="w-4/5 resize p-2 text-xs"
         maxRows={5}
         onChange={onChange}
-        defaultValue={JSON.stringify(exampleJson, null, "\t")}
+        defaultValue={JSON.stringify(Constants.exampleJson, null, "\t")}
       />
     </div>
   );

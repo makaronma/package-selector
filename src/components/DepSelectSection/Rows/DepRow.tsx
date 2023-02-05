@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 
-import { getDepDetail } from "../../../api";
-import { usePackages } from "../../../hooks/usePackages";
-import { DependencyDetail } from "../../../types/dependencyDetail";
+import { getDepDetail } from "~/api";
+import { usePackages } from "~/hooks/usePackages";
+import { DependencyDetail } from "~/types/dependencyDetail";
 // import SelectActionCell from "../Cells/SelectActionCell";
 // import SelectTargetVerCell from "../Cells/SelectTargetVerCell";
-import Constants from "../../../constants";
+import Constants from "~/constants";
 
 const DepRow = ({ dep, index, isDev }: { dep: Dependency; index: number, isDev?: boolean }) => {
   const { setDependencies, setDevDependencies, dependencies, devDependencies } = usePackages();

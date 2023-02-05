@@ -1,5 +1,5 @@
-import Constants from "./constants";
-import { PackageInputType } from "./types/userDependency";
+import Constants from "~/constants";
+import { PackageInputType } from "~/types/userDependency";
 
 export const processDataFromInput = (
   input: string,

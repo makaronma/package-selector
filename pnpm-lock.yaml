@@ -13,6 +13,8 @@ specifiers:
   '@types/react': ^18.0.27
   '@types/react-copy-to-clipboard': ^5.0.4
   '@types/react-dom': ^18.0.10
+  babel-plugin-root-import: ^6.6.0
+  customize-cra: ^1.0.0
   daisyui: ^2.50.0
   eslint: ^8.33.0
   gh-pages: ^5.0.0
@@ -20,6 +22,7 @@ specifiers:
   prettier: ^2.8.3
   prettier-plugin-tailwindcss: ^0.2.2
   react: ^18.2.0
+  react-app-rewired: ^2.2.1
   react-copy-to-clipboard: ^5.1.0
   react-dom: ^18.2.0
   react-scripts: ^5.0.1
@@ -53,10 +56,13 @@ dependencies:
 devDependencies:
   '@types/lodash': 4.14.191
   '@types/react-copy-to-clipboard': 5.0.4
+  babel-plugin-root-import: 6.6.0
+  customize-cra: 1.0.0
   eslint: 8.33.0
   gh-pages: 5.0.0
   prettier: 2.8.3
   prettier-plugin-tailwindcss: 0.2.2_prettier@2.8.3
+  react-app-rewired: 2.2.1_react-scripts@5.0.1
   react-scripts: 5.0.1_ig7zqqr7tqpjddzmuvyxxp6mqa
   source-map-explorer: 2.5.3
   tailwindcss: 3.2.4
@@ -3280,6 +3286,12 @@ packages:
       - supports-color
     dev: true
 
+  /babel-plugin-root-import/6.6.0:
+    resolution: {integrity: sha512-SPzVOHd7nDh5loZwZBxtX/oOu1MXeKjTkz+1VnnzLWC0dk8sJIGC2IDQ2uWIBjE5mUtXlQ35MTHSqN0Xn7qHrg==}
+    dependencies:
+      slash: 3.0.0
+    dev: true
+
   /babel-plugin-transform-react-remove-prop-types/0.4.24:
     resolution: {integrity: sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==}
     dev: true
@@ -4048,6 +4060,12 @@ packages:
 
   /csstype/3.1.1:
     resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
+
+  /customize-cra/1.0.0:
+    resolution: {integrity: sha512-DbtaLuy59224U+xCiukkxSq8clq++MOtJ1Et7LED1fLszWe88EoblEYFBJ895sB1mC6B4uu3xPT/IjClELhMbA==}
+    dependencies:
+      lodash.flow: 3.5.0
+    dev: true
 
   /daisyui/2.50.0:
     resolution: {integrity: sha512-KiqRvqMXi9rgoH84M8D69gXPg6x+cbdiaHqm8pFHOsXXN1rTl/+OcCKkSnkEwTtIge9VJVDGU6l4B8/n+Juc5g==}
@@ -6841,6 +6859,10 @@ packages:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
     dev: true
 
+  /lodash.flow/3.5.0:
+    resolution: {integrity: sha512-ff3BX/tSioo+XojX4MOsOMhJw0nZoUEF011LX8g8d3gvjVbxd89cCio4BCXronjxcTUIJUoqKEUA+n4CqvvRPw==}
+    dev: true
+
   /lodash.memoize/4.1.2:
     resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==}
     dev: true
@@ -8422,6 +8444,16 @@ packages:
       whatwg-fetch: 3.6.2
     dev: true
 
+  /react-app-rewired/2.2.1_react-scripts@5.0.1:
+    resolution: {integrity: sha512-uFQWTErXeLDrMzOJHKp0h8P1z0LV9HzPGsJ6adOtGlA/B9WfT6Shh4j2tLTTGlXOfiVx6w6iWpp7SOC5pvk+gA==}
+    hasBin: true
+    peerDependencies:
+      react-scripts: '>=2.1.3'
+    dependencies:
+      react-scripts: 5.0.1_ig7zqqr7tqpjddzmuvyxxp6mqa
+      semver: 5.7.1
+    dev: true
+
   /react-copy-to-clipboard/5.1.0_react@18.2.0:
     resolution: {integrity: sha512-k61RsNgAayIJNoy9yDsYzDe/yAZAzEbEgcz3DZMhF686LEyukcE1hzurxe85JandPUG+yTfGVFzuEw3xt8WP/A==}
     peerDependencies:
@@ -8973,6 +9005,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       node-forge: 1.3.1
+    dev: true
+
+  /semver/5.7.1:
+    resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
+    hasBin: true
     dev: true
 
   /semver/6.3.0:
