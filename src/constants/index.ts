@@ -5,12 +5,15 @@ const targetVersionChoices = ["default", "current", "latest"] as const;
 const terminalTypes = ["VS Code", "Mac/Window Terminal"] as const;
 const packageManagerTypes = ["pnpm", "yarn", "npm"] as const;
 
+const defaultInput = JSON.stringify(exampleJson, null, "\t")
+
 const Constants = {
   actionChoices,
   targetVersionChoices,
   terminalTypes,
   packageManagerTypes,
-  exampleJson
+  exampleJson,
+  defaultInput
 };
 
 export default Constants;

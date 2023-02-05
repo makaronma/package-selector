@@ -1,11 +1,16 @@
 import Constants from "~/constants";
 
 declare global {
-  interface Dependency {
+  interface DependencyField {
     name: string;
     version: string;
     action: ActionChoice;
     targetVersion: TargetVersionChoice;
+  }
+
+  interface PackageJsonData {
+    dependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
   }
 
   // Choice types implement to dependency version

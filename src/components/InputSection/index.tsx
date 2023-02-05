@@ -1,69 +1,66 @@
 import { ArrowDownIcon, CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useEffect, useRef } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-
-import { usePackages } from "~/hooks/usePackages";
-import { processDataFromInput } from "~/utils";
 import Constants from "~/constants";
+import { isJsonTextInputValidAtom, jsonTextInputAtom } from "~/store/atoms";
 
-
-const InputSection = () => {
-  const { isInputValid, setisInputValid, setDataInput } = usePackages();
-  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+const InputArea = () => {
+  const setJsonTextInputAtom = useSetAtom(jsonTextInputAtom);
+  
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const onChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      if (!setisInputValid || !setDataInput) return;
-      processDataFromInput(
-        e.target.value,
-        (data) => {
-          setisInputValid(true);
-          setDataInput(data);
-        },
-        () => {
-          setisInputValid(false);
-          setDataInput({ dependencies: undefined, devDependencies: undefined });
-        }
-        );
-      },
-      [setDataInput, setisInputValid]
-      );
+      setJsonTextInputAtom(e.target.value);
+    },
+    [setJsonTextInputAtom]
+  );
 
   useEffect(() => {
-    if (!textAreaRef.current) return;
-    if (!setisInputValid || !setDataInput) return;
+    if (textAreaRef.current) textAreaRef.current.style.height = "250px";
+  }, []);
+  return (
+    <TextareaAutosize
+      ref={textAreaRef}
+      style={{ height: 250 }}
+      className="w-4/5 resize p-2 text-xs"
+      maxRows={5}
+      onChange={onChange}
+      defaultValue={Constants.defaultInput}
+    />
+  );
+};
 
-    textAreaRef.current.style.height = "250px";
-    processDataFromInput(
-      textAreaRef.current.value,
-      (data) => {
-        setisInputValid(true);
-        setDataInput(data);
-      },
-      () => setisInputValid(false)
-    );
-  }, [setDataInput, setisInputValid]);
+const IsValidDisplay = () => {
+  const isJsonTextInputValid = useAtomValue(isJsonTextInputValidAtom);
 
+  return (
+    <div className="mx-auto w-4/5 self-start flex mb-1">
+      {isJsonTextInputValid ? (
+        <>
+          <span className="mr-1">Valid Format</span>
+          <CheckCircleIcon className="w-4 text-green-600" />
+        </>
+      ) : (
+        <>
+          <span className="mr-1">Invalid Format</span>
+          <XCircleIcon className="w-4 text-red-600" />
+        </>
+      )}
+    </div>
+  );
+};
+
+const InputSection = () => {
   return (
     <div className="mb-12 flex w-full flex-col items-center">
       <div className="font-semibold mb-1">Paste your package.json here</div>
       <div className="shadow-lg rounded-full p-1 bg-white animate-arrow-bounce mb-1">
         <ArrowDownIcon className="h-5 text-sky-500" />
       </div>
-      <div className="mx-auto w-4/5 self-start flex mb-1">
-        {isInputValid ? 
-          <><span className='mr-1'>Valid Format</span><CheckCircleIcon className='w-4 text-green-600'/></> : 
-          <><span className='mr-1'>Invalid Format</span><XCircleIcon className='w-4 text-red-600'/></> 
-        }
-      </div>
-      <TextareaAutosize
-        ref={textAreaRef}
-        style={{ height: 250 }}
-        className="w-4/5 resize p-2 text-xs"
-        maxRows={5}
-        onChange={onChange}
-        defaultValue={JSON.stringify(Constants.exampleJson, null, "\t")}
-      />
+      <IsValidDisplay />
+      <InputArea />
     </div>
   );
 };

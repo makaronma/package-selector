@@ -18,6 +18,9 @@ specifiers:
   daisyui: ^2.50.0
   eslint: ^8.33.0
   gh-pages: ^5.0.0
+  immer: ^9.0.19
+  jotai: ^2.0.0
+  jotai-immer: ^0.2.0
   lodash: ^4.17.21
   prettier: ^2.8.3
   prettier-plugin-tailwindcss: ^0.2.2
@@ -28,10 +31,12 @@ specifiers:
   react-scripts: ^5.0.1
   react-textarea-autosize: ^8.4.0
   source-map-explorer: ^2.5.3
+  superjson: ^1.12.2
   tailwindcss: ^3.2.4
   type-fest: ^3.5.5
   typescript: ^4.9.5
   web-vitals: ^3.1.1
+  zod: ^3.20.2
 
 dependencies:
   '@heroicons/react': 2.0.14_react@18.2.0
@@ -45,13 +50,18 @@ dependencies:
   '@types/react': 18.0.27
   '@types/react-dom': 18.0.10
   daisyui: 2.50.0
+  immer: 9.0.19
+  jotai: 2.0.0_react@18.2.0
+  jotai-immer: 0.2.0_2hsknuxe36zue3pxfdb7ykwqbe
   lodash: 4.17.21
   react: 18.2.0
   react-copy-to-clipboard: 5.1.0_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-textarea-autosize: 8.4.0_3stiutgnnbnfnf3uowm5cip22i
+  superjson: 1.12.2
   typescript: 4.9.5
   web-vitals: 3.1.1
+  zod: 3.20.2
 
 devDependencies:
   '@types/lodash': 4.14.191
@@ -3760,6 +3770,13 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
+  /copy-anything/3.0.3:
+    resolution: {integrity: sha512-fpW2W/BqEzqPp29QS+MwwfisHCQZtiduTe/m8idFo0xbti9fIZ2WVhAsCv4ggFVH3AgCkVdpoOCtQC6gBrdhjw==}
+    engines: {node: '>=12.13'}
+    dependencies:
+      is-what: 4.1.8
+    dev: false
+
   /copy-to-clipboard/3.3.3:
     resolution: {integrity: sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==}
     dependencies:
@@ -5693,7 +5710,6 @@ packages:
 
   /immer/9.0.19:
     resolution: {integrity: sha512-eY+Y0qcsB4TZKwgQzLaE/lqYMlKhv5J9dyd2RhhtGhNo2njPXDqU9XPfcNfa3MIDsdtZt5KlkIsirlo4dHsWdQ==}
-    dev: true
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -5951,6 +5967,11 @@ packages:
     dependencies:
       call-bind: 1.0.2
       get-intrinsic: 1.2.0
+
+  /is-what/4.1.8:
+    resolution: {integrity: sha512-yq8gMao5upkPoGEU9LsB2P+K3Kt8Q3fQFCGyNCWOAnJAMzEXVV9drYb0TXr42TTliLLhKIBvulgAXgtLLnwzGA==}
+    engines: {node: '>=12.13'}
+    dev: false
 
   /is-wsl/2.2.0:
     resolution: {integrity: sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==}
@@ -6624,6 +6645,30 @@ packages:
       - ts-node
       - utf-8-validate
     dev: true
+
+  /jotai-immer/0.2.0_2hsknuxe36zue3pxfdb7ykwqbe:
+    resolution: {integrity: sha512-hahK8EPiROS9RoNWmX/Z8rY9WkAijspX4BZ1O7umpcwI4kPNkbcCpu/PhiQ8FMcpEcF6KmbpbMpSSj/GFmo8NA==}
+    peerDependencies:
+      immer: '*'
+      jotai: '>=1.11.0'
+      react: '>=17.0.0'
+    dependencies:
+      immer: 9.0.19
+      jotai: 2.0.0_react@18.2.0
+      react: 18.2.0
+    dev: false
+
+  /jotai/2.0.0_react@18.2.0:
+    resolution: {integrity: sha512-04G0CRZQgp3xrFAezd6X14psZ2TRGekHeYMBcbDJ/BR8ZJQPS+j0YkMTxUxyG58HJnN2+adfj5sWQWoqgtp1XQ==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /js-sdsl/4.3.0:
     resolution: {integrity: sha512-mifzlm2+5nZ+lEcLJMoBK0/IH/bDg8XnJfd/Wq6IP+xoCjLZsTOnV2QpxlVbX9bMnkl5PdEjNtBJ9Cj1NjifhQ==}
@@ -9428,6 +9473,13 @@ packages:
       postcss-selector-parser: 6.0.11
     dev: true
 
+  /superjson/1.12.2:
+    resolution: {integrity: sha512-ugvUo9/WmvWOjstornQhsN/sR9mnGtWGYeTxFuqLb4AiT4QdUavjGFRALCPKWWnAiUJ4HTpytj5e0t5HoMRkXg==}
+    engines: {node: '>=10'}
+    dependencies:
+      copy-anything: 3.0.3
+    dev: false
+
   /supports-color/5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
@@ -10496,3 +10548,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod/3.20.2:
+    resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
+    dev: false
