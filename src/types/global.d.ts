@@ -25,4 +25,9 @@ declare global {
   // Ways to manage dependency
   type TerminalType = (typeof Constants.terminalTypes)[number];
   type PackageManagerType = (typeof Constants.packageManagerTypes)[number];
+
+  type DepRowData = {
+    actionChoice: ActionChoice;
+    targetVersionChoice: TargetVersionChoice;
+  };
 }

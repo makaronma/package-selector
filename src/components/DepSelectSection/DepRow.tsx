@@ -1,8 +1,12 @@
-import { memo, useCallback, useMemo } from "react";
-import DepLatestVerCell from "./Cells/DepLatestVerCell";
+import { useAtomValue } from "jotai";
+import { memo } from "react";
+import Constants from "~/constants";
+import { depRowAtom } from "~/store/atoms";
 
-// import SelectActionCell from "../Cells/SelectActionCell";
-// import SelectTargetVerCell from "../Cells/SelectTargetVerCell";
+import DepLatestVerCell from "./Cells/DepLatestVerCell";
+import SelectActionCell from "./Cells/SelectActionCell";
+import SelectTargetVerCell from "./Cells/SelectTargetVerCell";
+
 interface DepRowProps {
   name: DependencyBaseData["name"];
   version: DependencyBaseData["version"];
@@ -10,30 +14,13 @@ interface DepRowProps {
 }
 
 const DepRow = ({ name, version, isDev }: DepRowProps) => {
-  // const setDeps = isDev ? setDevDependencies : setDependencies;
-  // const deps = isDev ? devDependencies : dependencies;
-
-  // const actionChoice = useMemo(
-  //   () => deps.find((d) => d.name === dep.name)?.action,
-  //   [dep.name, deps]
-  // );
-  // const versionChoice = useMemo(
-  //   () => deps.find((d) => d.name === dep.name)?.targetVersion,
-  //   [dep.name, deps]
-  // );
-
-  // const setActionChoice = useCallback ((choice:NonNullable<SelectActionCellTypes['choice']>) => {
-  //   if (!setDeps) return;
-  //   setDeps(prev => prev.map(d => d.name === dep.name ? {
-  //     ...d,
-  //     action: choice
-  //   } : d))
-  // }, [dep.name, setDeps])
+  const depRowData = useAtomValue(depRowAtom);
 
   return (
     <tr
-      className="border-black 
-                  [&>td]:min-w-[100px] [&>td]:py-3 
+      className="border-black
+                  [&>td]:min-w-[100px]
+                  [&>td]:py-3
                   [&>td]:px-4
                   [&>td:not(:first-child)]:text-center
                   "
@@ -41,27 +28,26 @@ const DepRow = ({ name, version, isDev }: DepRowProps) => {
       <td>{name}</td>
       <td>{version}</td>
       <DepLatestVerCell name={name} version={version} />
-      {/* {Constants.actionChoices.map((a) => (
+
+      {Constants.actionChoices.map((a) => (
         <SelectActionCell
-          depName={dep.name}
-          value={a}
-          // setChoice={setActionChoice}
-          choice={actionChoice}
+          depName={name}
+          actionChoice={a}
+          isChecked={depRowData.actionChoice===a}
           isDev={isDev}
-          key={`radio-${index}-${a}`}
-        />
-      ))} */}
-      {/* {Constants.targetVersionChoices.map((v) => (
+          key={`${name}-radio-actionChoice:${a}`}
+          />
+      ))}
+
+      {Constants.targetVersionChoices.map((v) => (
         <SelectTargetVerCell
-          depName={dep.name}
-          value={v}
-          setChoice={()=>{}}
-          choice={versionChoice}
+          depName={name}
+          targetVersionChoice={v}
+          isChecked={depRowData.targetVersionChoice===v}
           isDev={isDev}
-          key={`radio-${index}-${v}`}
+          key={`${name}-radio-versionChoice:${v}`}
         />
-        <></>
-      ))} */}
+      ))}
     </tr>
   );
 };

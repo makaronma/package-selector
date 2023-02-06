@@ -2,6 +2,7 @@ import { atom } from "jotai";
 import Constants from "~/constants";
 import { z } from "zod";
 import { escapeSpecial, transformDefaultDepRowData, transformRawDep } from "~/utils";
+import produce from "immer";
 
 const dependencyDataSchema = z.record(z.string(), z.string());
 
@@ -56,3 +57,15 @@ export const devDepRowDataAtom = atom<DependencyRowData[] | undefined>((get) => 
 
   return transformDefaultDepRowData(devDeps)
 });
+
+// <--------------------- Dep Row Data ---------------------->
+export const depRowAtom = atom<DepRowData>({
+  actionChoice: "ignore",
+  targetVersionChoice: "latest",
+});
+
+// const updatedepRowAtom = atom(null, (get, set, updater:(prev:DepRowData)=>DepRowData) => {
+//   const prev = get(depRowAtom);
+//   const newState = updater(prev);
+//   set(depRowAtom, newState);
+// });

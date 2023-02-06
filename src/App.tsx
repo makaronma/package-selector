@@ -3,13 +3,12 @@ import GithubLogo from "~assets/GitHub-Mark-64px.png";
 import DepSelectSection from "~/components/DepSelectSection";
 import InputSection from "~/components/InputSection";
 
-// TODO: use immer + jotai
 // TODO: add latest versions display in listing(debounce)
 // TODO: fixed table header
 // TODO: subtitle clickable text layout
-// TODO: `@/` (babel path prefix)
 
 const App = () => {
+
   return (
     <>
       <div className="min-h-screen bg-sky-100">
