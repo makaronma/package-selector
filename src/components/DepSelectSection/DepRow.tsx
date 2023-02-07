@@ -33,6 +33,7 @@ const DepRow = ({ name, version, isDev, depRowAtom }: DepRowProps) => {
       {Constants.actionChoices.map((a) => (
         <SelectActionCell
           depName={name}
+          depVersion={version}
           actionChoice={a}
           isChecked={depRowData.actionChoice===a}
           isDev={isDev}

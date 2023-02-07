@@ -68,7 +68,8 @@ export type DepRowAtom = ReturnType<typeof createDepRowAtom>;
 
 // <--------------------- Result ---------------------->
 type NameWithVerion = {
-  name: string;
+  depName: string;
+  depVersion: string;
   targetVerion: TargetVersionChoice;
 };
 
@@ -80,7 +81,7 @@ export const resultAtom = atom({
 
 export const updateDepActionChoiceAtom = atom(
   null,
-  (get, set, depRowAtom: DepRowAtom, depName: string, actionChoice: ActionChoice) => {
+  (get, set, depRowAtom: DepRowAtom, depName: string,depVersion: string, actionChoice: ActionChoice) => {
     const prevDepRowData = get(depRowAtom);
     const prevDepActionChoice = prevDepRowData.actionChoice;
     const prevDepTargetVersion = prevDepRowData.targetVersionChoice;
@@ -97,7 +98,7 @@ export const updateDepActionChoiceAtom = atom(
         }))
       } else {
         set(resultAtom, produce(prevResult => {
-          prevResult[prevDepActionChoice] = prevResult[prevDepActionChoice].filter(dep => dep.name !== depName);
+          prevResult[prevDepActionChoice] = prevResult[prevDepActionChoice].filter(dep => dep.depName !== depName);
         }))
       }
     }
@@ -111,7 +112,7 @@ export const updateDepActionChoiceAtom = atom(
       return;
     }
     set(resultAtom, produce(prevResult => {
-      prevResult[actionChoice].push({ name: depName, targetVerion: prevDepTargetVersion });
+      prevResult[actionChoice].push({ depName, depVersion, targetVerion: prevDepTargetVersion });
     }))
   }
 );
@@ -127,7 +128,7 @@ export const updateDepTargetVerChoiceAtom = atom(
     // find dep item & mutate version choice
     if (actionChoice === "ignore" || actionChoice === "remove") return;
     set(resultAtom, produce(prevResult => {
-      const found = prevResult[actionChoice].find((dep) => dep.name === depName);
+      const found = prevResult[actionChoice].find((dep) => dep.depName === depName);
       if (found) found.targetVerion = targetVersionChoice;
     }))
   }
@@ -136,19 +137,29 @@ export const updateDepTargetVerChoiceAtom = atom(
 // <--------------------- Terminal Command Display ---------------------->
 export const terminalChoiceAtom = atom<TerminalType>("VS Code");
 export const packageManagerChoiceAtom = atom<PackageManagerType>("pnpm");
+
+const getTargetVerCommand = (depVersion: string, targetVersion: TargetVersionChoice) => {
+  if (targetVersion === "current") return `@${depVersion}`;
+  if (targetVersion === "latest") return "@latest";
+  return "";
+};
+
 export const commandAtom = atom((get) => {
   const packageManagerChoice = get(packageManagerChoiceAtom);
   const terminalChoice = get(terminalChoiceAtom);
 
   const { add: adds, upgrade: upgrades, remove: removes } = get(resultAtom);
+
   const addCommand = adds.length > 0 ? adds.reduce(
-    (sum, dep) => `${sum} ${dep.name}@${dep.targetVerion}`,
+    (sum, {depName, depVersion, targetVerion}) => `${sum} ${depName}${getTargetVerCommand(depVersion, targetVerion)}`,
     terminalCommand[packageManagerChoice].add
   ) : undefined;
+
   const upgradeCommand = upgrades.length > 0 ? upgrades.reduce(
-    (sum, dep) => `${sum} ${dep.name}@${dep.targetVerion}`,
+    (sum, {depName, depVersion, targetVerion}) => `${sum} ${depName}${getTargetVerCommand(depVersion, targetVerion)}`,
     terminalCommand[packageManagerChoice].upgrade
   ) : undefined;
+
   const removeCommand = removes.length > 0 ? removes.reduce(
     (sum, depName) => `${sum} ${depName}`,
     terminalCommand[packageManagerChoice].remove

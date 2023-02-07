@@ -3,19 +3,20 @@ import { memo, useCallback } from "react";
 import { DepRowAtom, updateDepActionChoiceAtom } from "~/store/atoms";
 
 interface SelectActionCellProps {
-  depName: string
+  depName: string;
+  depVersion: string;
   actionChoice: ActionChoice;
   isChecked: boolean
   isDev?: boolean;
   depRowAtom: DepRowAtom;
 }
 
-const SelectActionCell = ({ depName, actionChoice, isChecked, isDev, depRowAtom }: SelectActionCellProps) => {
+const SelectActionCell = ({ depName, depVersion, actionChoice, isChecked, isDev, depRowAtom }: SelectActionCellProps) => {
   const updateDepActionChoice = useSetAtom(updateDepActionChoiceAtom);
 
   const onClick = useCallback(() => {
-    updateDepActionChoice(depRowAtom,depName,actionChoice);
-  }, [actionChoice, depName, depRowAtom, updateDepActionChoice]);
+    updateDepActionChoice(depRowAtom, depName, depVersion, actionChoice);
+  }, [actionChoice, depName, depRowAtom, depVersion, updateDepActionChoice]);
 
   return (
     <td className="hover:bg-slate-50" onClick={onClick}>
