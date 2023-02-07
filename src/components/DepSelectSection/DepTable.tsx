@@ -1,9 +1,9 @@
+import { useAtomValue } from "jotai";
 import Constants from "~/constants";
-import SubTitleCell from "./Cells/SubTitleCell";
-import { Provider, useAtomValue } from "jotai";
 import { createDepRowAtom, rawDepDataAtom, rawDevDepDataAtom } from "~/store/atoms";
+
+import SubTitleCell from "./Cells/SubTitleCell";
 import DepRow from "./DepRow";
-import { useMemo } from "react";
 
 const TableHead = ({ isDev }: { isDev?: boolean }) => (
   <thead className=" border-black bg-slate-50 [&>tr>td:not(:first-child)]:text-center [&>tr>td]:px-4 [&>tr>td]:py-3">

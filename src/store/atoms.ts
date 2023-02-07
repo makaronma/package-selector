@@ -132,3 +132,7 @@ export const updateDepTargetVerChoiceAtom = atom(
     }))
   }
 );
+
+// <--------------------- Terminal Command Display ---------------------->
+export const terminalChoiceAtom = atom<TerminalType>("VS Code");
+export const packageManagerChoiceAtom = atom<PackageManagerType>("pnpm");
