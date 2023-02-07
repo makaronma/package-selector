@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import Constants from "~/constants";
+import Constants, { seperator, terminalCommand } from "~/constants";
 import { z } from "zod";
 import { escapeSpecial, transformDefaultDepRowData, transformRawDep } from "~/utils";
 import produce from "immer";
@@ -136,3 +136,36 @@ export const updateDepTargetVerChoiceAtom = atom(
 // <--------------------- Terminal Command Display ---------------------->
 export const terminalChoiceAtom = atom<TerminalType>("VS Code");
 export const packageManagerChoiceAtom = atom<PackageManagerType>("pnpm");
+export const commandAtom = atom((get) => {
+  const packageManagerChoice = get(packageManagerChoiceAtom);
+  const terminalChoice = get(terminalChoiceAtom);
+
+  const { add: adds, upgrade: upgrades, remove: removes } = get(resultAtom);
+  const addCommand = adds.length > 0 ? adds.reduce(
+    (sum, dep) => `${sum} ${dep.name}@${dep.targetVerion}`,
+    terminalCommand[packageManagerChoice].add
+  ) : undefined;
+  const upgradeCommand = upgrades.length > 0 ? upgrades.reduce(
+    (sum, dep) => `${sum} ${dep.name}@${dep.targetVerion}`,
+    terminalCommand[packageManagerChoice].upgrade
+  ) : undefined;
+  const removeCommand = removes.length > 0 ? removes.reduce(
+    (sum, depName) => `${sum} ${depName}`,
+    terminalCommand[packageManagerChoice].remove
+  ) : undefined;
+
+  const sep = seperator[terminalChoice];
+
+  const command = [addCommand, upgradeCommand, removeCommand].reduce<string>(
+    (sum, c) => {
+      if (c === undefined) return sum;
+      if (sum === "") {
+        return c;
+      }
+      return `${sum} ${sep} ${c}`;
+    },
+    ""
+  );
+
+  return command;
+});
