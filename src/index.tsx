@@ -1,25 +1,29 @@
-import './index.css';
+import "./index.css";
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-import App from './App';
-import { PackageProvider } from './hooks/usePackages';
-import reportWebVitals from './reportWebVitals';
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <PackageProvider>
-        <App />
-      </PackageProvider>
+      <App />
     </QueryClientProvider>
   </React.StrictMode>
 );

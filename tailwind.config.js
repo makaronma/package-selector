@@ -1,5 +1,5 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-const plugin = require('tailwindcss/plugin')
+const defaultTheme = require("tailwindcss/defaultTheme")
+const plugin = require("tailwindcss/plugin")
 
 /** @type {import('tailwindcss').Config} */ 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
-        'arrow-bounce': {
+        "arrow-bounce": {
           "0%, 100%": {
             transform: "translateY(50%)",
             "animation-timing-function": "cubic-bezier(0, 0, 0.2, 1)",
@@ -22,7 +22,7 @@ module.exports = {
         },
       },
       animation: {
-        'arrow-bounce': 'arrow-bounce 1s linear infinite',
+        "arrow-bounce": "arrow-bounce 1s linear infinite",
       },
     },
   },

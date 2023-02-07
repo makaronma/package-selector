@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": "./src", // all paths are relative to the baseUrl
+    "paths": {
+      "~/*": ["*"] // resolve any `~/foo/bar` to `<baseUrl>/foo/bar`
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,7 +20,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
 }
