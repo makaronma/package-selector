@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
 import { memo } from "react";
 import Constants from "~/constants";
-import { depRowAtom } from "~/store/atoms";
+import { DepRowAtom } from "~/store/atoms";
 
 import DepLatestVerCell from "./Cells/DepLatestVerCell";
 import SelectActionCell from "./Cells/SelectActionCell";
@@ -11,9 +11,10 @@ interface DepRowProps {
   name: DependencyBaseData["name"];
   version: DependencyBaseData["version"];
   isDev?: boolean;
+  depRowAtom: DepRowAtom;
 }
 
-const DepRow = ({ name, version, isDev }: DepRowProps) => {
+const DepRow = ({ name, version, isDev, depRowAtom }: DepRowProps) => {
   const depRowData = useAtomValue(depRowAtom);
 
   return (
@@ -35,6 +36,7 @@ const DepRow = ({ name, version, isDev }: DepRowProps) => {
           actionChoice={a}
           isChecked={depRowData.actionChoice===a}
           isDev={isDev}
+          depRowAtom={depRowAtom}
           key={`${name}-radio-actionChoice:${a}`}
           />
       ))}
@@ -45,6 +47,7 @@ const DepRow = ({ name, version, isDev }: DepRowProps) => {
           targetVersionChoice={v}
           isChecked={depRowData.targetVersionChoice===v}
           isDev={isDev}
+          depRowAtom={depRowAtom}
           key={`${name}-radio-versionChoice:${v}`}
         />
       ))}

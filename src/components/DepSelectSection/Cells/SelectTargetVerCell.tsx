@@ -1,44 +1,21 @@
 import { useSetAtom } from "jotai";
 import { memo, useCallback } from "react";
-import { depRowAtom } from "~/store/atoms";
+import { DepRowAtom, updateDepTargetVerChoiceAtom } from "~/store/atoms";
 
 interface SelectTargetVerCellProps {
   depName: string
   targetVersionChoice: TargetVersionChoice;
   isChecked: boolean
   isDev?: boolean;
+  depRowAtom: DepRowAtom;
 }
 
-const SelectTargetVerCell = ({ depName, targetVersionChoice, isChecked, isDev }: SelectTargetVerCellProps) => {
-  const setDepRowData = useSetAtom(depRowAtom);
+const SelectTargetVerCell = ({ depName, targetVersionChoice, isChecked, isDev, depRowAtom }: SelectTargetVerCellProps) => {
+  const updateDepTargetVerChoice = useSetAtom(updateDepTargetVerChoiceAtom);
 
   const onClick = useCallback(() => {
-    setDepRowData((prev) => ({ ...prev, targetVersionChoice }));
-
-    // if(isDev){
-    //   setDevDependencies((prev) =>
-    //     prev.map((dep) =>
-    //       dep.name === depName
-    //         ? {
-    //             ...dep,
-    //             targetVersion: value
-    //           }
-    //         : dep
-    //     )
-    //   );
-    //   return;
-    // }
-    // setDependencies((prev) =>
-    //   prev.map((dep) =>
-    //     dep.name === depName
-    //       ? {
-    //           ...dep,
-    //           targetVersion: value
-    //         }
-    //       : dep
-    //   )
-    // );
-  }, [targetVersionChoice, setDepRowData]);
+    updateDepTargetVerChoice(depRowAtom, depName, targetVersionChoice);
+  }, [updateDepTargetVerChoice, depRowAtom, depName, targetVersionChoice]);
 
   return (
     <td className="hover:bg-slate-50" onClick={onClick}>

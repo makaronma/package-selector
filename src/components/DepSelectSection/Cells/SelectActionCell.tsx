@@ -1,44 +1,21 @@
 import { useSetAtom } from "jotai";
 import { memo, useCallback } from "react";
-import { depRowAtom, updateDepActionChoiceAtom } from "~/store/atoms";
+import { DepRowAtom, updateDepActionChoiceAtom } from "~/store/atoms";
 
 interface SelectActionCellProps {
   depName: string
   actionChoice: ActionChoice;
   isChecked: boolean
   isDev?: boolean;
+  depRowAtom: DepRowAtom;
 }
 
-const SelectActionCell = ({ depName, actionChoice, isChecked, isDev }: SelectActionCellProps) => {
+const SelectActionCell = ({ depName, actionChoice, isChecked, isDev, depRowAtom }: SelectActionCellProps) => {
   const updateDepActionChoice = useSetAtom(updateDepActionChoiceAtom);
 
   const onClick = useCallback(() => {
-    updateDepActionChoice(actionChoice, depName);
-    
-    // if(isDev){
-    //   setDevDependencies((prev) =>
-    //     prev.map((dep) =>
-    //       dep.name === depName
-    //         ? {
-    //             ...dep,
-    //             action: value,
-    //           }
-    //         : dep
-    //     )
-    //   );
-    //   return;
-    // }
-    // setDependencies((prev) =>
-    //   prev.map((dep) =>
-    //     dep.name === depName
-    //       ? {
-    //           ...dep,
-    //           action: value,
-    //         }
-    //       : dep
-    //   )
-    // );
-  }, [actionChoice, depName, updateDepActionChoice]);
+    updateDepActionChoice(depRowAtom,depName,actionChoice);
+  }, [actionChoice, depName, depRowAtom, updateDepActionChoice]);
 
   return (
     <td className="hover:bg-slate-50" onClick={onClick}>

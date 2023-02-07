@@ -59,16 +59,19 @@ export const devDepRowDataAtom = atom<DependencyRowData[] | undefined>((get) => 
 });
 
 // <--------------------- Dep Row Data ---------------------->
-export const depRowAtom = atom<DepRowData>({
-  actionChoice: "ignore",
-  targetVersionChoice: "latest",
-});
+export const createDepRowAtom = () =>
+  atom<DepRowData>({
+    actionChoice: "ignore",
+    targetVersionChoice: "latest",
+  });
+export type DepRowAtom = ReturnType<typeof createDepRowAtom>;
 
 // <--------------------- Result ---------------------->
 type NameWithVerion = {
   name: string;
   targetVerion: TargetVersionChoice;
 };
+
 export const resultAtom = atom({
   add: [] as NameWithVerion[],
   remove: [] as string[],
@@ -77,11 +80,55 @@ export const resultAtom = atom({
 
 export const updateDepActionChoiceAtom = atom(
   null,
-  (get, set, actionChoice: ActionChoice, depName: string) => {
-    const prevActionChoice = get(depRowAtom).actionChoice
+  (get, set, depRowAtom: DepRowAtom, depName: string, actionChoice: ActionChoice) => {
+    const prevDepRowData = get(depRowAtom);
+    const prevDepActionChoice = prevDepRowData.actionChoice;
+    const prevDepTargetVersion = prevDepRowData.targetVersionChoice;
+    if (prevDepActionChoice === actionChoice) return;
+
+    // update row data
     set(depRowAtom, (prev) => ({ ...prev, actionChoice }));
-    if (prevActionChoice === "add") {
-      set(resultAtom, produce(prev => prev.add = prev.add.filter(a=>a.name!==depName)))
+
+    // update result data (remove previous action choice from list)
+    if (prevDepActionChoice !== "ignore") {
+      if (prevDepActionChoice === "remove") {
+        set(resultAtom, produce(prevResult => {
+          prevResult.remove = prevResult.remove.filter(name => name !== depName);
+        }))
+      } else {
+        set(resultAtom, produce(prevResult => {
+          prevResult[prevDepActionChoice] = prevResult[prevDepActionChoice].filter(dep => dep.name !== depName);
+        }))
+      }
     }
+
+    // update result data (add current action choice to list)
+    if (actionChoice === "ignore") return;
+    if (actionChoice === "remove") {
+      set(resultAtom, produce(prevResult => {
+        prevResult.remove.push(depName);
+      }))
+      return;
+    }
+    set(resultAtom, produce(prevResult => {
+      prevResult[actionChoice].push({ name: depName, targetVerion: prevDepTargetVersion });
+    }))
+  }
+);
+
+export const updateDepTargetVerChoiceAtom = atom(
+  null,
+  (get, set, depRowAtom: DepRowAtom, depName: string, targetVersionChoice: TargetVersionChoice) => {
+    const actionChoice = get(depRowAtom).actionChoice;
+
+    // update row data
+    set(depRowAtom, (prev) => ({ ...prev, targetVersionChoice }));
+
+    // find dep item & mutate version choice
+    if (actionChoice === "ignore" || actionChoice === "remove") return;
+    set(resultAtom, produce(prevResult => {
+      const found = prevResult[actionChoice].find((dep) => dep.name === depName);
+      if (found) found.targetVerion = targetVersionChoice;
+    }))
   }
 );

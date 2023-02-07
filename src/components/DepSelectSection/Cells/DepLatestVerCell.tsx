@@ -3,8 +3,6 @@ import { memo, useCallback, useMemo } from "react";
 import { getDepDetail } from "~/api";
 import { DependencyDetail } from "~/types/dependencyDetail";
 
-// import SelectActionCell from "../Cells/SelectActionCell";
-// import SelectTargetVerCell from "../Cells/SelectTargetVerCell";
 interface DepLatestVerCellProps {
   name: DependencyBaseData["name"];
   version: DependencyBaseData["version"];
