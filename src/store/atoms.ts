@@ -78,10 +78,14 @@ export const resultAtom = atom({
   remove: [] as string[],
   upgrade: [] as NameWithVerion[],
 });
+export const resultDevAtom = atom({
+  add: [] as NameWithVerion[],
+  upgrade: [] as NameWithVerion[],
+});
 
 export const updateDepActionChoiceAtom = atom(
   null,
-  (get, set, depRowAtom: DepRowAtom, depName: string,depVersion: string, actionChoice: ActionChoice) => {
+  (get, set, depRowAtom: DepRowAtom, depName: string,depVersion: string, actionChoice: ActionChoice, isDev: boolean | undefined) => {
     const prevDepRowData = get(depRowAtom);
     const prevDepActionChoice = prevDepRowData.actionChoice;
     const prevDepTargetVersion = prevDepRowData.targetVersionChoice;
@@ -91,13 +95,15 @@ export const updateDepActionChoiceAtom = atom(
     set(depRowAtom, (prev) => ({ ...prev, actionChoice }));
 
     // update result data (remove previous action choice from list)
+    const atomToAdd = (isDev ? resultDevAtom : resultAtom) as typeof resultDevAtom;
+
     if (prevDepActionChoice !== "ignore") {
       if (prevDepActionChoice === "remove") {
         set(resultAtom, produce(prevResult => {
           prevResult.remove = prevResult.remove.filter(name => name !== depName);
         }))
       } else {
-        set(resultAtom, produce(prevResult => {
+        set(atomToAdd, produce(prevResult => {
           prevResult[prevDepActionChoice] = prevResult[prevDepActionChoice].filter(dep => dep.depName !== depName);
         }))
       }
@@ -111,7 +117,7 @@ export const updateDepActionChoiceAtom = atom(
       }))
       return;
     }
-    set(resultAtom, produce(prevResult => {
+    set(atomToAdd, produce(prevResult => {
       prevResult[actionChoice].push({ depName, depVersion, targetVerion: prevDepTargetVersion });
     }))
   }
@@ -119,15 +125,18 @@ export const updateDepActionChoiceAtom = atom(
 
 export const updateDepTargetVerChoiceAtom = atom(
   null,
-  (get, set, depRowAtom: DepRowAtom, depName: string, targetVersionChoice: TargetVersionChoice) => {
+  (get, set, depRowAtom: DepRowAtom, depName: string, targetVersionChoice: TargetVersionChoice, isDev: boolean | undefined) => {
     const actionChoice = get(depRowAtom).actionChoice;
 
+    
     // update row data
     set(depRowAtom, (prev) => ({ ...prev, targetVersionChoice }));
-
+    
     // find dep item & mutate version choice
+    const atomToAdd = (isDev ? resultDevAtom : resultAtom) as typeof resultDevAtom;
+    
     if (actionChoice === "ignore" || actionChoice === "remove") return;
-    set(resultAtom, produce(prevResult => {
+    set(atomToAdd, produce(prevResult => {
       const found = prevResult[actionChoice].find((dep) => dep.depName === depName);
       if (found) found.targetVerion = targetVersionChoice;
     }))
@@ -149,6 +158,7 @@ export const commandAtom = atom((get) => {
   const terminalChoice = get(terminalChoiceAtom);
 
   const { add: adds, upgrade: upgrades, remove: removes } = get(resultAtom);
+  const { add: addDevs, upgrade: upgradeDevs } = get(resultDevAtom);
 
   const addCommand = adds.length > 0 ? adds.reduce(
     (sum, {depName, depVersion, targetVerion}) => `${sum} ${depName}${getTargetVerCommand(depVersion, targetVerion)}`,
@@ -159,15 +169,25 @@ export const commandAtom = atom((get) => {
     (sum, {depName, depVersion, targetVerion}) => `${sum} ${depName}${getTargetVerCommand(depVersion, targetVerion)}`,
     terminalCommand[packageManagerChoice].upgrade
   ) : undefined;
-
+  
   const removeCommand = removes.length > 0 ? removes.reduce(
     (sum, depName) => `${sum} ${depName}`,
     terminalCommand[packageManagerChoice].remove
+    ) : undefined;
+
+  const addDevCommand = addDevs.length > 0 ? addDevs.reduce(
+    (sum, {depName, depVersion, targetVerion}) => `${sum} ${depName}${getTargetVerCommand(depVersion, targetVerion)}`,
+    `${terminalCommand[packageManagerChoice].add} -D`
+  ) : undefined;
+
+  const upgradeDevCommand = upgradeDevs.length > 0 ? upgradeDevs.reduce(
+    (sum, {depName, depVersion, targetVerion}) => `${sum} ${depName}${getTargetVerCommand(depVersion, targetVerion)}`,
+    `${terminalCommand[packageManagerChoice].upgrade} -D`
   ) : undefined;
 
   const sep = seperator[terminalChoice];
 
-  const command = [addCommand, upgradeCommand, removeCommand].reduce<string>(
+  const command = [addCommand, upgradeCommand, removeCommand, addDevCommand, upgradeDevCommand].reduce<string>(
     (sum, c) => {
       if (c === undefined) return sum;
       if (sum === "") {

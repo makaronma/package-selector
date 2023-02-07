@@ -15,8 +15,8 @@ const SelectActionCell = ({ depName, depVersion, actionChoice, isChecked, isDev,
   const updateDepActionChoice = useSetAtom(updateDepActionChoiceAtom);
 
   const onClick = useCallback(() => {
-    updateDepActionChoice(depRowAtom, depName, depVersion, actionChoice);
-  }, [actionChoice, depName, depRowAtom, depVersion, updateDepActionChoice]);
+    updateDepActionChoice(depRowAtom, depName, depVersion, actionChoice, isDev);
+  }, [actionChoice, depName, depRowAtom, depVersion, isDev, updateDepActionChoice]);
 
   return (
     <td className="hover:bg-slate-50" onClick={onClick}>
