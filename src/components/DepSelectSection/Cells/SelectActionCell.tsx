@@ -1,6 +1,6 @@
 import { useSetAtom } from "jotai";
 import { memo, useCallback } from "react";
-import { depRowAtom } from "~/store/atoms";
+import { depRowAtom, updateDepActionChoiceAtom } from "~/store/atoms";
 
 interface SelectActionCellProps {
   depName: string
@@ -10,10 +10,10 @@ interface SelectActionCellProps {
 }
 
 const SelectActionCell = ({ depName, actionChoice, isChecked, isDev }: SelectActionCellProps) => {
-  const setDepRowData = useSetAtom(depRowAtom);
+  const updateDepActionChoice = useSetAtom(updateDepActionChoiceAtom);
 
   const onClick = useCallback(() => {
-    setDepRowData((prev) => ({ ...prev, actionChoice }));
+    updateDepActionChoice(actionChoice, depName);
     
     // if(isDev){
     //   setDevDependencies((prev) =>
@@ -38,13 +38,14 @@ const SelectActionCell = ({ depName, actionChoice, isChecked, isDev }: SelectAct
     //       : dep
     //   )
     // );
-  }, [actionChoice, setDepRowData]);
+  }, [actionChoice, depName, updateDepActionChoice]);
 
   return (
     <td className="hover:bg-slate-50" onClick={onClick}>
       <input
         type="radio"
         checked={isChecked}
+        readOnly
         className="radio checked:bg-blue-500 m-auto flex"
       />
     </td>

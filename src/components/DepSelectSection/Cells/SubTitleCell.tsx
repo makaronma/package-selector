@@ -17,20 +17,20 @@ const SubTitleCell = ({ name, isDev }: { name: ActionChoice | TargetVersionChoic
   //   [name]
   // );
 
-  // const onClick = useCallback(() => {
-  //   if (!setDeps) return;
-  //   setDeps((prev) =>
-  //     prev.map((dep) => ({
-  //       ...dep,
-  //       ...propToSet
-  //     }))
-  //   );
-  // }, [propToSet, setDeps]);
+  const onClick = useCallback(() => {
+    // if (!setDeps) return;
+    // setDeps((prev) =>
+    //   prev.map((dep) => ({
+    //     ...dep,
+    //     ...propToSet
+    //   }))
+    // );
+  }, []);
+  
   return(
-    // <td className="hover:bg-slate-200" key={`dep-sub-title-${name}`} onClick={onClick}>
-    //   <div className="cursor-pointer">{capitalize(name)}</div>
-    // </td>
-    <></>
+    <td className="hover:bg-slate-200" key={`dep-sub-title-${name}`} onClick={onClick}>
+      <div className="cursor-pointer">{capitalize(name)}</div>
+    </td>
 )};
 
 export default SubTitleCell;

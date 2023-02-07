@@ -64,8 +64,24 @@ export const depRowAtom = atom<DepRowData>({
   targetVersionChoice: "latest",
 });
 
-// const updatedepRowAtom = atom(null, (get, set, updater:(prev:DepRowData)=>DepRowData) => {
-//   const prev = get(depRowAtom);
-//   const newState = updater(prev);
-//   set(depRowAtom, newState);
-// });
+// <--------------------- Result ---------------------->
+type NameWithVerion = {
+  name: string;
+  targetVerion: TargetVersionChoice;
+};
+export const resultAtom = atom({
+  add: [] as NameWithVerion[],
+  remove: [] as string[],
+  upgrade: [] as NameWithVerion[],
+});
+
+export const updateDepActionChoiceAtom = atom(
+  null,
+  (get, set, actionChoice: ActionChoice, depName: string) => {
+    const prevActionChoice = get(depRowAtom).actionChoice
+    set(depRowAtom, (prev) => ({ ...prev, actionChoice }));
+    if (prevActionChoice === "add") {
+      set(resultAtom, produce(prev => prev.add = prev.add.filter(a=>a.name!==depName)))
+    }
+  }
+);

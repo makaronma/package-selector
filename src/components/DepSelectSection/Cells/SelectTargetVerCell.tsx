@@ -45,6 +45,7 @@ const SelectTargetVerCell = ({ depName, targetVersionChoice, isChecked, isDev }:
       <input
         type="radio"
         checked={isChecked}
+        readOnly
         className="radio checked:bg-blue-500 m-auto flex"
       />
     </td>
