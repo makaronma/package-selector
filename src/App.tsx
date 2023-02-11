@@ -2,6 +2,7 @@ import GithubLogo from "~assets/GitHub-Mark-64px.png";
 import CommandDisplaySection from "~/components/CommandDisplaySection";
 import DepSelectSection from "~/components/DepSelectSection";
 import InputSection from "~/components/InputSection";
+import ApiEndPointSelectSection from "./components/ApiEndPointSelectSection";
 
 // TODO: add latest versions display in listing(debounce)
 // TODO: fixed table header
@@ -20,6 +21,7 @@ const App = () => {
         </div>
         <div className="px-14 pt-6 pb-24">
           <InputSection />
+          <ApiEndPointSelectSection />
           <DepSelectSection />
           <CommandDisplaySection />
         </div>

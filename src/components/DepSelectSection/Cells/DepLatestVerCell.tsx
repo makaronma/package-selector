@@ -1,8 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { memo, useCallback, useMemo } from "react";
-import { getDepDetail } from "~/api";
 import useDepDetail from "~/hooks/useDepDetail";
-import { DependencyDetail } from "~/types/dependencyDetail";
 
 interface DepLatestVerCellProps {
   name: DependencyBaseData["name"];
@@ -36,9 +33,9 @@ const DepLatestVerCell = ({ name, version }: DepLatestVerCellProps) => {
           : ""
       }`}
     >
-      {depDetail?.repository?.url ? (
+      {depDetail?.repo?.url ? (
         <a
-          href={depDetail.repository.url.replace(/git\+|\.git/g, "")}
+          href={depDetail.repo.url.replace(/git\+|\.git/g, "")}
           target="_blank"
           rel="noreferrer"
           className="underline"

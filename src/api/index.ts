@@ -1,16 +1,37 @@
-import axios, { AxiosInstance } from "axios";
-import { atom } from "jotai";
-import { DependencyDetail } from "~/types/dependencyDetail";
+import { AxiosInstance } from "axios";
+import { NpmJsDependencyDetail } from "~/types/npmJsdependencyDetail";
+import { NpmIoDepDetail } from "~/types/npmIoDepDetail";
 
-export const getDepDetail = (depName: string, apiClient: AxiosInstance) => async () =>
-  apiClient
-    .get<DependencyDetail>(`/${depName}/latest`)
-    .then((res) => res.data);
+export const endPoints = {
+  npmJs: "https://registry.npmjs.org/",
+  npmsIo: "https://api.npms.io/v2/package/",
+} as const;
 
-const baseFetcherAtom = atom({
-  client: axios.create({
-    baseURL: "https://registry.npmjs.org/",
-  }),
-});
+export type ApiEndPointChoice = keyof typeof endPoints;
 
-export const apiClientAtom = atom((get) => get(baseFetcherAtom).client);
+
+export const getFetchDepDetailFn = (
+  apiEndPointChoice: ApiEndPointChoice,
+  apiClient: AxiosInstance,
+  url: string
+) =>
+  apiEndPointChoice === "npmJs"
+    ? () =>
+        apiClient.get<NpmJsDependencyDetail>(url).then(({ data }) => ({
+          name: data.name,
+          version: data.version,
+          repo: {
+            url: data.repository?.url,
+          },
+        }))
+    : () =>
+        apiClient
+          .get<NpmIoDepDetail>(url)
+          .then((res) => res.data.collected.metadata)
+          .then((data) => ({
+            name: data.name,
+            version: data.version,
+            repo: {
+              url: data.repository.url,
+            },
+          }));

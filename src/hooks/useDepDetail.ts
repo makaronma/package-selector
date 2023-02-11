@@ -1,14 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import { apiClientAtom, getDepDetail } from "~/api";
-import { DependencyDetail } from "~/types/dependencyDetail";
+import { getFetchDepDetailFn } from "~/api";
+import { apiClientAtom, apiEndPointChoiceAtom } from "~/store/apiAtoms";
+
+type DepDetail = {
+  name?: string;
+  version?: string;
+  repo?: {
+    url?: string;
+  };
+};
 
 const useDepDetail = (depName: string) => {
+  const apiEndPointChoice = useAtomValue(apiEndPointChoiceAtom);
   const apiClient = useAtomValue(apiClientAtom);
-  
-  return useQuery<DependencyDetail>({
-    queryKey: ["dep-detail", depName],
-    queryFn: getDepDetail(depName, apiClient),
+
+  const url =
+    apiEndPointChoice === "npmJs"
+      ? `/${depName}/latest`
+      : encodeURIComponent(depName);
+
+  return useQuery<DepDetail>({
+    queryKey: ["dep-detail", url],
+    queryFn: getFetchDepDetailFn(apiEndPointChoice, apiClient, url),
   });
 };
 

@@ -1,4 +1,4 @@
-export interface DependencyDetail {
+export interface NpmJsDependencyDetail {
   name?:                    string;
   description?:             string;
   keywords?:                string[];
