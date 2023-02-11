@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { memo, useCallback, useMemo } from "react";
 import { getDepDetail } from "~/api";
+import useDepDetail from "~/hooks/useDepDetail";
 import { DependencyDetail } from "~/types/dependencyDetail";
 
 interface DepLatestVerCellProps {
@@ -10,10 +11,7 @@ interface DepLatestVerCellProps {
 }
 // TODO: escape '/'
 const DepLatestVerCell = ({ name, version }: DepLatestVerCellProps) => {
-  const { data: depDetail } = useQuery<DependencyDetail>({
-    queryKey: ["dep-detail", name],
-    queryFn: getDepDetail(name),
-  });
+  const { data: depDetail } = useDepDetail(name);
 
   const checkHasNewer = useCallback(
     (num: number) =>

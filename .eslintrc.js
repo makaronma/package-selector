@@ -32,6 +32,7 @@ module.exports = {
     "@typescript-eslint/no-empty-function": [0],
     "@typescript-eslint/no-empty-interface": [0],
     quotes: ["error", "double"],
-    "no-empty": [0]
+    "no-empty": [0],
+    "@typescript-eslint/no-floating-promises": [0]
   },
 };
