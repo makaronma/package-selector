@@ -1,6 +1,6 @@
 {
   "name": "package-selector",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://makaronma.github.io/package-selector",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "predeploy": "pnpm run build",
+    "predeploy": "pnpm run build --profile",
     "deploy": "gh-pages -d build",
     "tsc": "tsc",
     "lint": "eslint",
