@@ -32,6 +32,6 @@ export const getFetchDepDetailFn = (
             name: data.name,
             version: data.version,
             repo: {
-              url: data.repository.url,
+              url: data.repository?.url,
             },
           }));
