@@ -9,7 +9,7 @@ module.exports = {
       version: "detect",
     },
   },
-  ignorePatterns: ["*.js",],
+  ignorePatterns: ["*.js"],
   extends: [
     "eslint:recommended",
     "react-app",
@@ -31,8 +31,8 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": [0],
     "@typescript-eslint/no-empty-function": [0],
     "@typescript-eslint/no-empty-interface": [0],
+    "@typescript-eslint/no-floating-promises": [0],
     quotes: ["error", "double"],
     "no-empty": [0],
-    "@typescript-eslint/no-floating-promises": [0]
   },
 };

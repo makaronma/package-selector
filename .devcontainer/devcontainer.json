@@ -1,0 +1,7 @@
+{
+  "name": "example proj",
+  "dockerFile": "Dockerfile",
+  "appPort": [3000],
+  "runArgs": ["-u", "node"],
+  "postCreateCommand": "npm install",
+}
